@@ -56,7 +56,7 @@ export const MESSAGES = {
   boost2: "That's more like it!",
   boost3: "Ya call that working?",
   boost4: "Come on!",
-  boost5: "It's on!",
+  boost5: "Keep going!",
 };
 
 // Function for converting the seconds to a more human friendly format
