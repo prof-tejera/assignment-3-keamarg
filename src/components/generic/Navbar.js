@@ -62,10 +62,10 @@ const NavList = styled.ul`
 `;
 
 const links = [
-  { name: TIMERS.stopwatch, path: "/assignment-3-keamarg" },
-  { name: TIMERS.countdown, path: "/assignment-3-keamarg/countdown" },
-  { name: TIMERS.xy, path: "/assignment-3-keamarg/xy" },
-  { name: TIMERS.tabata, path: "/assignment-3-keamarg/tabata" },
+  { name: TIMERS.stopwatch, path: "/" },
+  { name: TIMERS.countdown, path: "/countdown" },
+  { name: TIMERS.xy, path: "/xy" },
+  { name: TIMERS.tabata, path: "/tabata" },
 ];
 
 // The navbar is used to set the initial states for the different timers

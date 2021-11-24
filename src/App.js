@@ -5,6 +5,7 @@ import { TimerContext } from "./TimerProvider";
 
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
+import AddView from "./views/AddView";
 
 const Container = styled.div`
   background: #f0f6fb;
@@ -29,14 +30,20 @@ const App = () => {
         <nav>
           <ul>
             <li id="timers" onClick={handleClick}>
-              <Link to="/assignment-3-keamarg/">Timers</Link>
+              <Link to="/">Timers</Link>
             </li>
             <li value="docs" onClick={handleClick}>
-              <Link to="/assignment-3-keamarg/docs">Documentation</Link>
+              <Link to="/docs">Documentation</Link>
+            </li>
+            <li value="add" onClick={handleClick}>
+              <Link to="/add">Add</Link>
             </li>
           </ul>
         </nav>
         <Switch>
+          <Route path="/add">
+            <AddView />
+          </Route>
           <Route path="/docs">
             <DocumentationView />
           </Route>

@@ -25,19 +25,19 @@ const App = () => {
       component: Stopwatch,
     },
     {
-      path: "/assignment-3-keamarg/Stopwatch",
+      path: "/Stopwatch",
       component: Stopwatch,
     },
     {
-      path: "/assignment-3-keamarg/Countdown",
+      path: "/Countdown",
       component: Countdown,
     },
     {
-      path: "/assignment-3-keamarg/XY",
+      path: "/XY",
       component: XY,
     },
     {
-      path: "/assignment-3-keamarg/Tabata",
+      path: "/Tabata",
       component: Tabata,
     },
   ];
