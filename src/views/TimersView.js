@@ -21,23 +21,23 @@ const App = () => {
       component: Stopwatch,
     },
     {
-      path: "/assignment-2-keamarg",
+      path: "/assignment-3-keamarg",
       component: Stopwatch,
     },
     {
-      path: "/Stopwatch",
+      path: "/assignment-3-keamarg/Stopwatch",
       component: Stopwatch,
     },
     {
-      path: "/Countdown",
+      path: "/assignment-3-keamarg/Countdown",
       component: Countdown,
     },
     {
-      path: "/XY",
+      path: "/assignment-3-keamarg/XY",
       component: XY,
     },
     {
-      path: "/Tabata",
+      path: "/assignment-3-keamarg/Tabata",
       component: Tabata,
     },
   ];

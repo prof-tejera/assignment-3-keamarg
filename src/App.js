@@ -29,10 +29,10 @@ const App = () => {
         <nav>
           <ul>
             <li id="timers" onClick={handleClick}>
-              <Link to="/">Timers</Link>
+              <Link to="/assignment-3-keamarg/">Timers</Link>
             </li>
             <li value="docs" onClick={handleClick}>
-              <Link to="/docs">Documentation</Link>
+              <Link to="/assignment-3-keamarg/docs">Documentation</Link>
             </li>
           </ul>
         </nav>
