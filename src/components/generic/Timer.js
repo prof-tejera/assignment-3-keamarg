@@ -119,7 +119,14 @@ const Timer = (props) => {
         e.currentTarget.value === BTNTYPE.start ||
         e.currentTarget.value === BTNTYPE.stop
       ) {
-        if (t || timerType === TIMERS.stopwatch) {
+        if (
+          timerType === TIMERS.stopwatch &&
+          Number(time) !== Number(savedTime)
+        ) {
+          setIsRunning(!isRunning);
+          setBtnState(!btnState);
+        }
+        if (timerType !== TIMERS.stopwatch && t) {
           setIsRunning(!isRunning);
           setBtnState(!btnState);
         }
@@ -127,7 +134,11 @@ const Timer = (props) => {
 
       //Reset button
       if (e.currentTarget.value === BTNTYPE.reset) {
-        setTime(savedTime);
+        if (timerType === TIMERS.stopwatch) {
+          setTime(0);
+        } else {
+          setTime(savedTime);
+        }
         setBtnState(true);
         setIsRunning(false);
         setShowMessage(false);
@@ -136,7 +147,13 @@ const Timer = (props) => {
 
       //Forward button
       if (e.currentTarget.value === BTNTYPE.forward) {
-        if (t) {
+        if (timerType === TIMERS.stopwatch) {
+          setTime(savedTime);
+          setCurrentRound(0);
+          setMessage(MESSAGES.finished);
+          setShowMessage(true);
+        }
+        if (t && timerType !== TIMERS.stopwatch) {
           setTime(0);
           setCurrentRound(0);
           setMessage(MESSAGES.finished);
@@ -154,7 +171,11 @@ const Timer = (props) => {
         setShowMessage(false);
         setCurrentRound(rounds);
 
-        if (timerType === TIMERS.countdown) {
+        if (timerType === TIMERS.countdown || timerType === TIMERS.stopwatch) {
+          if (timerType === TIMERS.stopwatch) {
+            setSavedTime(time);
+            setTime(0);
+          }
           if (!t) {
             setMessage(MESSAGES.settimer);
             setShowSettingsMessage(true);
@@ -180,18 +201,18 @@ const Timer = (props) => {
   useTimer(timerType);
 
   // Base strucure for all timers
-  if (!settingsState || timerType === TIMERS.stopwatch) {
+  if (!settingsState) {
     return (
       <Panel timerType={timerType}>
         <UpperPanel className="text-center">
           <Title>{timerType}</Title>
-          {timerType !== TIMERS.stopwatch ? (
-            <Button
-              styleName="settingsBtn"
-              onClick={handleClick}
-              value={BTNTYPE.settings}
-            ></Button>
-          ) : null}
+          {/* {timerType !== TIMERS.stopwatch ? ( */}
+          <Button
+            styleName="settingsBtn"
+            onClick={handleClick}
+            value={BTNTYPE.settings}
+          ></Button>
+          {/* ) : null} */}
           <i className={`bi bi-stopwatch stopwatch ${!isRunning}`}></i>
         </UpperPanel>
         <Middlepanel>
@@ -237,15 +258,15 @@ const Timer = (props) => {
                 value={BTNTYPE.reset}
                 onClick={handleClick}
               ></Button>
-              {timerType !== TIMERS.stopwatch ? (
-                <Button
-                  styleName="col-3"
-                  value={BTNTYPE.forward}
-                  onClick={handleClick}
-                ></Button>
-              ) : (
-                <></>
-              )}
+              {/* {timerType !== TIMERS.stopwatch ? ( */}
+              <Button
+                styleName="col-3"
+                value={BTNTYPE.forward}
+                onClick={handleClick}
+              ></Button>
+              {/* ) : ( */}
+              <></>
+              {/* )} */}
             </div>
           </div>
         </LowerPanel>

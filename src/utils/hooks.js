@@ -19,6 +19,13 @@ export const useTimer = (timerType) => {
     () => {
       if (timerType === TIMERS.stopwatch) {
         setTime(Number(time) + 1);
+        //Assigment 3 stopwatch fix
+        if (Number(time) === Number(savedTime) - 1) {
+          setIsRunning(false);
+          setBtnState(true);
+          setMessage(MESSAGES.finished);
+          setShowMessage(true);
+        }
       } else {
         if (Number(time) > 0) {
           setTime(Number(time) - 1);

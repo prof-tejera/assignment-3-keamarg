@@ -61,24 +61,24 @@ const Settings = (props) => {
 
   return (
     <div className="w-75">
-      {timerType !== TIMERS.stopwatch ? (
-        <>
-          <Text>
-            <label htmlFor="timer">Set workout time</label>
-            <br />
-            {timerValue(time)}
-          </Text>
-          <SetInput
-            name="timer"
-            type="range"
-            min="0"
-            max="7200"
-            step="15"
-            value={time}
-            onChange={handleChange}
-          ></SetInput>
-        </>
-      ) : null}
+      {/* {timerType !== TIMERS.stopwatch ? ( */}
+      <>
+        <Text>
+          <label htmlFor="timer">Set workout time</label>
+          <br />
+          {timerValue(time)}
+        </Text>
+        <SetInput
+          name="timer"
+          type="range"
+          min="0"
+          max="7200"
+          step="2"
+          value={time}
+          onChange={handleChange}
+        ></SetInput>
+      </>
+      {/* ) : null} */}
       {timerType === TIMERS.xy || timerType === TIMERS.tabata ? (
         <>
           <Text>
