@@ -23,8 +23,8 @@ const TimerProvider = ({ children }) => {
   // const [tabataTimer, setTabataTimer] = useState(true);
   // const [tabataSettings, setTabataSettings] = useState(false);
   const [time, setTime] = useState(0);
-  const [rounds, setRounds] = useState(0);
-  const [rest, setRest] = useState(0);
+  const [rounds, setRounds] = useState(1);
+  const [rest, setRest] = useState(10);
   const [isRunning, setIsRunning] = useState(false);
   const [savedTime, setSavedTime] = useState(0);
   const [docs, setDocs] = useState(false);

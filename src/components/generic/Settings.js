@@ -20,11 +20,11 @@ const SetInput = styled.input`
   border: 0px;
 `;
 
-const Credentials = styled.p`
-  font-size: 0.8rem;
-  color: ${COLORS.text};
-  padding-top: 0.5rem;
-`;
+// const Credentials = styled.p`
+//   font-size: 0.8rem;
+//   color: ${COLORS.text};
+//   padding-top: 0.5rem;
+// `;
 
 const Text = styled.p`
   font-size: 1rem;
@@ -107,7 +107,7 @@ const Settings = (props) => {
           <SetInput
             name="rest"
             type="range"
-            min="0"
+            min="2"
             max="300"
             step="5"
             value={rest}
@@ -115,7 +115,7 @@ const Settings = (props) => {
           ></SetInput>
         </>
       ) : null}
-      <Credentials>By Martin Gundtoft</Credentials>
+      {/* <Credentials>By Martin Gundtoft</Credentials> */}
     </div>
   );
 };

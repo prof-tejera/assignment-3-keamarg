@@ -43,26 +43,37 @@ export const useTimer = (timerType) => {
         if (timerType === TIMERS.xy) {
           if (Number(time) === 0 && currentRound > 1) {
             setCurrentRound((rounds) => rounds - 1);
-            setTime(savedTime);
+            setTime(savedTime - 1);
             setIsRunning(true);
             setBtnState(false);
+          } else if (Number(time) === 0 && currentRound === 1) {
+            setCurrentRound(0);
           }
         }
-        if (timerType === TIMERS.tabata && currentRound > 1) {
+        if (timerType === TIMERS.tabata && currentRound > 0) {
           if (!currentRest) {
             setShowMessage(true);
             setMessage(MESSAGES.work);
           }
-          if (Number(time) === 0 && currentRound > 1) {
+          if (Number(time) === 0 && currentRound > 0) {
             setCurrentRest(!currentRest);
             setMessage(MESSAGES.rest);
-            setTime(rest);
+            setTime(rest - 1);
             setIsRunning(true);
             setBtnState(false);
             if (currentRest) {
               setMessage(MESSAGES.work2);
               setCurrentRound((rounds) => rounds - 1);
-              setTime(savedTime);
+              setTime(savedTime - 1);
+              if (currentRound === 1) {
+                setIsRunning(false);
+                setTime(0);
+                setCurrentRound(0);
+                setBtnState(true);
+                setMessage(MESSAGES.finished);
+                setShowMessage(true);
+                setCurrentRest(false);
+              }
             }
           }
         }

@@ -82,13 +82,14 @@ const Navbar = () => {
   const { setShowTimerRounds } = useContext(TimerContext);
   const { setShowMessage } = useContext(TimerContext);
   const { setSavedTime } = useContext(TimerContext);
+  const { setCurrentRest } = useContext(TimerContext);
 
   // Click handler for the navbar
   const handleClick = (e) => {
     if (!docs) {
       setTime(0);
-      setRounds(0);
-      setRest(0);
+      setRounds(1);
+      setRest(10);
       setIsRunning(false);
       setBtnState(true);
       setSettingsState(true);
@@ -96,6 +97,7 @@ const Navbar = () => {
       setShowSettingsMessage(false);
       setShowMessage(false);
       setSavedTime(0);
+      setCurrentRest(false);
 
       if (e.target.innerHTML === "Stopwatch") {
         setShowTimerRounds(true);

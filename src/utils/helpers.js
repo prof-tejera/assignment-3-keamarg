@@ -23,6 +23,7 @@ export const BUTTONS = {
   stop: "bi bi-pause-circle",
   settings: "bi bi-list",
   forward: "bi bi-skip-forward-circle",
+  ready: "bi bi-check2-circle",
 };
 
 export const BTNTYPE = {
@@ -31,6 +32,7 @@ export const BTNTYPE = {
   stop: "stop",
   settings: "settings",
   forward: "forward",
+  ready: "ready",
 };
 
 export const TIMERS = {

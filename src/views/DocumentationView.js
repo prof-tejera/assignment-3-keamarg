@@ -67,6 +67,7 @@ const Documentation = () => {
           component={<DisplayTime />}
           propDocs={[{}]}
         />
+
         <DocumentComponent
           title="Panel"
           component={<Panel />}
