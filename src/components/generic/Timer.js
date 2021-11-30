@@ -21,19 +21,22 @@ const UpperPanel = styled.div`
   position: relative;
   height: 15rem;
   .false {
-    color: ${COLORS.stop};
-    animation: pulse 1s ease infinite, color 0.1s ease;
+    animation: pulse 1s ease infinite, color 1s ease;
+    animation-delay: 1s;
   }
 
   @keyframes pulse {
     0% {
+      color: ${COLORS.stop};
       transform: scale(1);
     }
     10% {
+      color: ${COLORS.stop};
       transform: scale(1.1);
     }
 
     100% {
+      color: ${COLORS.stop};
       transform: scale(1);
     }
   }
