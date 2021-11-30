@@ -106,15 +106,22 @@ const Navbar = () => {
       switch (e.target.innerHTML) {
         case "Stopwatch":
           setTimerType(TIMERS.stopwatch);
+          localStorage.setItem("timerType", "Stopwatch");
           break;
         case "Countdown":
           setTimerType(TIMERS.countdown);
+          localStorage.setItem("timerType", "Countdown");
+
           break;
         case "XY":
           setTimerType(TIMERS.xy);
+          localStorage.setItem("timerType", "XY");
+
           break;
         case "Tabata":
           setTimerType(TIMERS.tabata);
+          localStorage.setItem("timerType", "Tabata");
+
           break;
         default:
           setTimerType(TIMERS.stopwatch);

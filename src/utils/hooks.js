@@ -3,7 +3,7 @@ import { TimerContext } from "../TimerProvider";
 import { TIMERS, getMessage, MESSAGES } from "./helpers";
 
 export const useTimer = (timerType) => {
-  const [delay] = useState(100);
+  const [delay] = useState(1000);
   const { isRunning, setIsRunning } = useContext(TimerContext);
   const { time, setTime } = useContext(TimerContext);
   const { setBtnState } = useContext(TimerContext);
@@ -17,65 +17,77 @@ export const useTimer = (timerType) => {
   // Code inspired by the article Nico shared (reference in readme)
   useInterval(
     () => {
+      //stopwatch
       if (timerType === TIMERS.stopwatch) {
         setTime(Number(time) + 1);
-        //Assigment 3 stopwatch fix
         if (Number(time) === Number(savedTime) - 1) {
           setIsRunning(false);
           setBtnState(true);
-          setMessage(MESSAGES.finished);
           setShowMessage(true);
+          setMessage(MESSAGES.finished);
         }
-      } else {
+      }
+      //countdown
+      if (timerType === TIMERS.countdown) {
         if (Number(time) > 1) {
           setTime(Number(time) - 1);
         } else {
           setIsRunning(false);
           setTime(0);
           setBtnState(true);
-
           setShowMessage(true);
-          if (timerType === TIMERS.countdown) {
-            setMessage(MESSAGES.finished);
-          } else {
-            setMessage(getMessage(currentRound));
-          }
+          setMessage(MESSAGES.finished);
         }
-        if (timerType === TIMERS.xy) {
-          if (Number(time) === 0 && currentRound > 1) {
-            setCurrentRound((rounds) => rounds - 1);
-            setTime(savedTime - 1);
-            setIsRunning(true);
-            setBtnState(false);
-          } else if (Number(time) === 0 && currentRound === 1) {
-            setCurrentRound(0);
-          }
+      }
+      //xy
+      if (timerType === TIMERS.xy) {
+        if (Number(time) > 1) {
+          setTime(Number(time) - 1);
+        } else if (currentRound > 1) {
+          setCurrentRound((rounds) => rounds - 1);
+          setTime(savedTime);
+          setShowMessage(true);
+          setMessage(getMessage(currentRound));
+        } else if (Number(time) === 1 && currentRound === 1) {
+          setCurrentRound(0);
+          setTime(0);
+          setBtnState(true);
+          setIsRunning(false);
+          setShowMessage(true);
+          setMessage(MESSAGES.finished);
         }
-        if (timerType === TIMERS.tabata && currentRound > 0) {
-          if (!currentRest) {
+      }
+
+      //tabata
+      if (timerType === TIMERS.tabata) {
+        if (!currentRest) {
+          if (Number(time) > 1) {
+            setTime(Number(time) - 1);
             setShowMessage(true);
             setMessage(MESSAGES.work);
-          }
-          if (Number(time) === 0 && currentRound > 0) {
-            setCurrentRest(!currentRest);
+          } else if (currentRound > 0) {
+            setTime(rest);
+            setCurrentRest(true);
+            setShowMessage(true);
             setMessage(MESSAGES.rest);
-            setTime(rest - 1);
-            setIsRunning(true);
-            setBtnState(false);
-            if (currentRest) {
-              setMessage(MESSAGES.work2);
-              setCurrentRound((rounds) => rounds - 1);
-              setTime(savedTime - 1);
-              if (currentRound === 1) {
-                setIsRunning(false);
-                setTime(0);
-                setCurrentRound(0);
-                setBtnState(true);
-                setMessage(MESSAGES.finished);
-                setShowMessage(true);
-                setCurrentRest(false);
-              }
-            }
+          }
+        }
+        if (currentRest) {
+          if (Number(time) > 1) {
+            setTime(Number(time) - 1);
+          } else if (currentRound > 1) {
+            setCurrentRound((rounds) => rounds - 1);
+            setTime(savedTime);
+            setCurrentRest(false);
+            setShowMessage(true);
+            setMessage(MESSAGES.work2);
+          } else if (Number(time) === 1 && currentRound === 1) {
+            setCurrentRound(0);
+            setTime(0);
+            setBtnState(true);
+            setIsRunning(false);
+            setShowMessage(true);
+            setMessage(MESSAGES.finished);
           }
         }
       }

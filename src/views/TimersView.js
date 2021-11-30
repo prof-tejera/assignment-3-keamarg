@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Stopwatch from "../components/timers/Stopwatch";
-import Countdown from "../components/timers/Countdown";
-import XY from "../components/timers/XY";
-import Tabata from "../components/timers/Tabata";
+import Timer from "../components/generic/Timer";
 import Navbar from "../components/generic/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,27 +15,27 @@ const App = () => {
   const routes = [
     {
       path: "/",
-      component: Stopwatch,
+      component: Timer,
     },
     {
       path: "/assignment-3-keamarg",
-      component: Stopwatch,
+      component: Timer,
     },
     {
       path: "/Stopwatch",
-      component: Stopwatch,
+      component: Timer,
     },
     {
       path: "/Countdown",
-      component: Countdown,
+      component: Timer,
     },
     {
       path: "/XY",
-      component: XY,
+      component: Timer,
     },
     {
       path: "/Tabata",
-      component: Tabata,
+      component: Timer,
     },
   ];
 

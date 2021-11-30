@@ -107,7 +107,7 @@ const Message = styled.p`
   font-size:1.5rem;
 `;
 
-const Timer = (props) => {
+const Timer = () => {
   const { time, setTime } = useContext(TimerContext);
   const { isRunning, setIsRunning } = useContext(TimerContext);
   const { btnState, setBtnState } = useContext(TimerContext);
@@ -122,8 +122,9 @@ const Timer = (props) => {
     useContext(TimerContext);
   const { showTimerRounds, setShowTimerRounds } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
+  const { timerType } = useContext(TimerContext);
 
-  const { timerType } = props;
+  // const { timerType } = props;
 
   // Click handler for all buttons
   const handleClick = (e) => {
@@ -273,11 +274,6 @@ const Timer = (props) => {
                     : " "}
                 </Message>
               )}
-              {/* {timerType === TIMERS.stopwatch ? (
-                <Message>Target: {timerValue(savedTime)}</Message>
-              ) : (
-                <></>
-              )} */}
               {showTimerRounds ? <DisplayTime value={currentRest} /> : <></>}
             </div>
             <div className="row justify-content-around">
@@ -291,15 +287,12 @@ const Timer = (props) => {
                 value={BTNTYPE.reset}
                 onClick={handleClick}
               ></Button>
-              {/* {timerType !== TIMERS.stopwatch ? ( */}
               <Button
                 styleName="col-3"
                 value={BTNTYPE.forward}
                 onClick={handleClick}
               ></Button>
-              {/* ) : ( */}
               <></>
-              {/* )} */}
             </div>
           </div>
         </LowerPanel>

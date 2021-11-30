@@ -8,6 +8,20 @@ const Display = styled.label`
   font-size: 3rem;
   font-weight: 300;
   // font-family: "Orbitron", sans-serif;
+  #minutes,
+  #seconds {
+    display: inline-block;
+    width: 6rem;
+  }
+  #hours {
+    display: inline-block;
+    width: 5rem;
+  }
+  #deciSeconds {
+    display: inline-block;
+    width: 1rem;
+    font-size: 1rem;
+  }
 `;
 
 const DisplayTime = () => {
@@ -16,6 +30,10 @@ const DisplayTime = () => {
 
   return (
     <Display style={{ color: `${currentRest ? COLORS.stop : COLORS.text}` }}>
+      {/* <span id="hours">{timerValue(time, true).slice(0, 1)}h</span>
+      <span id="minutes">{timerValue(time, true).slice(1, 2)}m</span>
+      <span id="seconds">{timerValue(time, true).slice(2, 3)}s</span>
+      <span id="deciSeconds"> {timerValue(time, true).slice(3)}</span> */}
       {timerValue(time)}
     </Display>
   );

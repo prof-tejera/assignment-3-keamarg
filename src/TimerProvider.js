@@ -34,7 +34,11 @@ const TimerProvider = ({ children }) => {
   const [showSettingsMessage, setShowSettingsMessage] = useState(false);
   const [showTimerRounds, setShowTimerRounds] = useState(true);
   const [currentRest, setCurrentRest] = useState(false);
-  const [timerType, setTimerType] = useState("stopwatch");
+  const [timerType, setTimerType] = useState(
+    localStorage.getItem("timerType")
+      ? localStorage.getItem("timerType")
+      : "Stopwatch"
+  );
 
   return (
     <TimerContext.Provider

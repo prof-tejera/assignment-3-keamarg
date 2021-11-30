@@ -61,7 +61,6 @@ const Settings = (props) => {
 
   return (
     <div className="w-75">
-      {/* {timerType !== TIMERS.stopwatch ? ( */}
       <>
         <Text>
           <label htmlFor="timer">Set workout time</label>
@@ -78,7 +77,6 @@ const Settings = (props) => {
           onChange={handleChange}
         ></SetInput>
       </>
-      {/* ) : null} */}
       {timerType === TIMERS.xy || timerType === TIMERS.tabata ? (
         <>
           <Text>
@@ -102,7 +100,8 @@ const Settings = (props) => {
           <Text>
             <label htmlFor="rest">Set rest time</label>
             <br />
-            {timerValue(rest).substr(4, 6)}
+            {timerValue(rest)}
+            {/* {timerValue(rest).substr(4, 6)} */}
           </Text>
           <SetInput
             name="rest"
