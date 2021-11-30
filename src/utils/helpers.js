@@ -63,10 +63,10 @@ export const MESSAGES = {
 
 // Function for converting the seconds to a more human friendly format
 export const timerValue = (value) => {
-  const fullTime = new Date(value * 1000).toISOString();
+  const fullTime = new Date(value * 100).toISOString();
   const hours = fullTime.substr(12, 1);
-  const minutes = fullTime.substr(14, 2);
-  const seconds = fullTime.substr(17, 2);
+  const minutes = fullTime.substr(17, 2);
+  const seconds = fullTime.substr(20, 2);
   return hours + "h " + minutes + "m " + seconds + "s";
 };
 

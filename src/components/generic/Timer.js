@@ -22,7 +22,7 @@ const UpperPanel = styled.div`
   height: 15rem;
   .false {
     color: ${COLORS.stop};
-    animation: pulse 1.2s ease infinite, color 0.3s ease;
+    animation: pulse 1s ease infinite, color 0.3s ease;
   }
 
   @keyframes pulse {
@@ -30,8 +30,9 @@ const UpperPanel = styled.div`
       transform: scale(1);
     }
     50% {
-      transform: scale(1.1);
+      transform: scale(${() => (TIMERS.stopwatch ? 0.8 : 1.2)});
     }
+
     100% {
       transform: scale(1);
     }
@@ -93,7 +94,7 @@ const SettingsPanel = styled.div`
   }
   .readyBtn {
     z-index: 1;
-    font-size: 1.5rem;
+    font-size: 2rem;
     position: absolute;
     bottom: 1rem;
     margin: 0 auto;
@@ -226,13 +227,11 @@ const Timer = (props) => {
       <Panel timerType={timerType}>
         <UpperPanel className="text-center">
           <Title>{timerType}</Title>
-          {/* {timerType !== TIMERS.stopwatch ? ( */}
           <Button
             styleName="settingsBtn"
             onClick={handleClick}
             value={BTNTYPE.settings}
           ></Button>
-          {/* ) : null} */}
           <i className={`bi bi-stopwatch stopwatch ${!isRunning}`}></i>
         </UpperPanel>
         <Middlepanel>

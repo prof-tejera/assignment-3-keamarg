@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TimerContext } from "../../TimerProvider";
 import { NavLink } from "react-router-dom";
 import { COLORS, TIMERS } from "../../utils/helpers";
@@ -83,6 +83,7 @@ const Navbar = () => {
   const { setShowMessage } = useContext(TimerContext);
   const { setSavedTime } = useContext(TimerContext);
   const { setCurrentRest } = useContext(TimerContext);
+  const { timerType, setTimerType } = useContext(TimerContext);
 
   // Click handler for the navbar
   const handleClick = (e) => {
@@ -102,8 +103,28 @@ const Navbar = () => {
       if (e.target.innerHTML === "Stopwatch") {
         setShowTimerRounds(true);
       }
+      switch (e.target.innerHTML) {
+        case "Stopwatch":
+          setTimerType(TIMERS.stopwatch);
+          break;
+        case "Countdown":
+          setTimerType(TIMERS.countdown);
+          break;
+        case "XY":
+          setTimerType(TIMERS.xy);
+          break;
+        case "Tabata":
+          setTimerType(TIMERS.tabata);
+          break;
+        default:
+          setTimerType(TIMERS.stopwatch);
+      }
     }
   };
+
+  useEffect(() => {
+    console.log(timerType);
+  }, [timerType]);
 
   return (
     <NavList>

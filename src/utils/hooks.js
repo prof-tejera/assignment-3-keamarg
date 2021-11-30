@@ -3,7 +3,7 @@ import { TimerContext } from "../TimerProvider";
 import { TIMERS, getMessage, MESSAGES } from "./helpers";
 
 export const useTimer = (timerType) => {
-  const [delay] = useState(1000);
+  const [delay] = useState(100);
   const { isRunning, setIsRunning } = useContext(TimerContext);
   const { time, setTime } = useContext(TimerContext);
   const { setBtnState } = useContext(TimerContext);
@@ -27,10 +27,11 @@ export const useTimer = (timerType) => {
           setShowMessage(true);
         }
       } else {
-        if (Number(time) > 0) {
+        if (Number(time) > 1) {
           setTime(Number(time) - 1);
         } else {
           setIsRunning(false);
+          setTime(0);
           setBtnState(true);
 
           setShowMessage(true);
