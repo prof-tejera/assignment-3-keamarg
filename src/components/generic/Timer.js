@@ -22,15 +22,15 @@ const UpperPanel = styled.div`
   height: 15rem;
   .false {
     color: ${COLORS.stop};
-    animation: pulse 1s ease infinite, color 0.3s ease;
+    animation: pulse 1s ease infinite, color 0.1s ease;
   }
 
   @keyframes pulse {
     0% {
       transform: scale(1);
     }
-    50% {
-      transform: scale(${() => (TIMERS.stopwatch ? 0.8 : 1.2)});
+    10% {
+      transform: scale(1.1);
     }
 
     100% {
@@ -124,14 +124,12 @@ const Timer = () => {
   const { currentRest, setCurrentRest } = useContext(TimerContext);
   const { timerType } = useContext(TimerContext);
 
-  // const { timerType } = props;
+  // Click handler for all buttons (refactored to seperate handlers)
 
-  // Click handler for all buttons
-  const handleClick = (e) => {
+  // Start/stop button
+  const handleClickStartStop = (e) => {
     if (!docs) {
       const t = Number(time);
-
-      // Start/stop button
       if (
         e.currentTarget.value === BTNTYPE.start ||
         e.currentTarget.value === BTNTYPE.stop
@@ -148,8 +146,12 @@ const Timer = () => {
           setBtnState(!btnState);
         }
       }
+    }
+  };
 
-      //Reset button
+  //Reset button
+  const handleClickReset = (e) => {
+    if (!docs) {
       if (e.currentTarget.value === BTNTYPE.reset) {
         if (timerType === TIMERS.stopwatch) {
           setTime(0);
@@ -162,8 +164,13 @@ const Timer = () => {
         setCurrentRound(rounds);
         setCurrentRest(false);
       }
+    }
+  };
 
-      //Forward button
+  //Forward button
+  const handleClickForward = (e) => {
+    if (!docs) {
+      const t = Number(time);
       if (e.currentTarget.value === BTNTYPE.forward) {
         if (timerType === TIMERS.stopwatch) {
           setTime(savedTime);
@@ -178,8 +185,13 @@ const Timer = () => {
         }
         setCurrentRound(0);
       }
+    }
+  };
 
-      //Settings/ready button
+  //Settings/ready button
+  const handleClickSettingsReady = (e) => {
+    if (!docs) {
+      const t = Number(time);
       if (
         e.currentTarget.value === BTNTYPE.settings ||
         e.currentTarget.value === BTNTYPE.ready
@@ -230,7 +242,7 @@ const Timer = () => {
           <Title>{timerType}</Title>
           <Button
             styleName="settingsBtn"
-            onClick={handleClick}
+            onClick={handleClickSettingsReady}
             value={BTNTYPE.settings}
           ></Button>
           <i className={`bi bi-stopwatch stopwatch ${!isRunning}`}></i>
@@ -242,7 +254,7 @@ const Timer = () => {
                 <>
                   <Button
                     styleName="ctaBtn"
-                    onClick={handleClick}
+                    onClick={handleClickSettingsReady}
                     value={BTNTYPE.settings}
                     inner={message + " "}
                   ></Button>
@@ -280,17 +292,17 @@ const Timer = () => {
               <Button
                 styleName="col-3"
                 value={btnState ? BTNTYPE.start : BTNTYPE.stop}
-                onClick={handleClick}
+                onClick={handleClickStartStop}
               ></Button>
               <Button
                 styleName="col-3"
                 value={BTNTYPE.reset}
-                onClick={handleClick}
+                onClick={handleClickReset}
               ></Button>
               <Button
                 styleName="col-3"
                 value={BTNTYPE.forward}
-                onClick={handleClick}
+                onClick={handleClickForward}
               ></Button>
               <></>
             </div>
@@ -304,7 +316,7 @@ const Timer = () => {
       <SettingsPanel className="settingspanel text-center d-flex align-items-center justify-content-center">
         <Button
           styleName="settingsBtn"
-          onClick={handleClick}
+          onClick={handleClickSettingsReady}
           value={BTNTYPE.settings}
         ></Button>
         <Settings styleName="p-2" timerType={timerType}></Settings>
@@ -312,7 +324,7 @@ const Timer = () => {
           <Button
             styleName="readyBtn"
             value={"ready"}
-            onClick={handleClick}
+            onClick={handleClickSettingsReady}
           ></Button>
         ) : (
           <></>
