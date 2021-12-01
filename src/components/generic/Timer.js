@@ -97,10 +97,46 @@ const SettingsPanel = styled.div`
   }
   .readyBtn {
     z-index: 1;
-    font-size: 2rem;
+    font-size: 3rem;
     position: absolute;
     bottom: 1rem;
     margin: 0 auto;
+    background-color: transparent;
+    animation: pulse2 1s ease 2 forwards;
+  }
+
+  @keyframes pulse2 {
+    0% {
+      color: ${COLORS.start};
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+      color: ${COLORS.start};
+    }
+  }
+
+  .notReadyBtn {
+    z-index: 1;
+    font-size: 3rem;
+    position: absolute;
+    bottom: 1rem;
+    margin: 0 auto;
+    background-color: transparent;
+    opacity: 0.2;
+    :hover {
+      opacity: 0.3;
+    }
+  }
+
+  .backBtn {
+    z-index: 1;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
     background-color: transparent;
   }
 `;
@@ -197,7 +233,8 @@ const Timer = () => {
       const t = Number(time);
       if (
         e.currentTarget.value === BTNTYPE.settings ||
-        e.currentTarget.value === BTNTYPE.ready
+        e.currentTarget.value === BTNTYPE.ready ||
+        e.currentTarget.value === BTNTYPE.back
       ) {
         setSettingsState(!settingsState);
         setBtnState(true);
@@ -318,19 +355,24 @@ const Timer = () => {
     <Panel timerType={timerType}>
       <SettingsPanel className="settingspanel text-center d-flex align-items-center justify-content-center">
         <Button
-          styleName="settingsBtn"
+          styleName="backBtn"
           onClick={handleClickSettingsReady}
-          value={BTNTYPE.settings}
+          value={BTNTYPE.back}
         ></Button>
         <Settings styleName="p-2" timerType={timerType}></Settings>
         {time > 0 ? (
           <Button
             styleName="readyBtn"
-            value={"ready"}
+            value={BTNTYPE.ready}
             onClick={handleClickSettingsReady}
           ></Button>
         ) : (
-          <></>
+          <Button
+            styleName="notReadyBtn"
+            value={BTNTYPE.notReady}
+            disabled={true}
+            onClick={handleClickSettingsReady}
+          ></Button>
         )}
       </SettingsPanel>
     </Panel>

@@ -28,9 +28,14 @@ const Button = (props) => {
     value: "none",
     onClick: null,
   };
-  const { value, styleName, onClick, inner } = props;
+  const { value, styleName, onClick, inner, disabled } = props;
   return (
-    <Btn className={styleName} value={value} onClick={onClick}>
+    <Btn
+      className={styleName}
+      value={value}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {inner}
       <i className={BUTTONS[value] ? BUTTONS[value] : BUTTONS.start}></i>
     </Btn>

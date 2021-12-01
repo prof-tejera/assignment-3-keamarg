@@ -23,9 +23,11 @@ export const BUTTONS = {
   reset: "bi bi-arrow-counterclockwise",
   start: "bi bi-play-circle",
   stop: "bi bi-pause-circle",
-  settings: "bi bi-list",
+  settings: "bi bi-gear",
   forward: "bi bi-skip-forward-circle",
-  ready: "bi bi-check2-circle",
+  ready: "bi bi-check-circle",
+  back: "bi bi-arrow-left-circle",
+  notReady: "bi bi-circle",
 };
 
 export const BTNTYPE = {
@@ -35,6 +37,8 @@ export const BTNTYPE = {
   settings: "settings",
   forward: "forward",
   ready: "ready",
+  back: "back",
+  notReady: "notReady",
 };
 
 export const TIMERS = {
@@ -44,11 +48,11 @@ export const TIMERS = {
   tabata: "Tabata",
 };
 
-export const INPUTS = {
-  timer: "timer",
-  rounds: "rounds",
-  rest: "rest",
-};
+// export const INPUTS = {
+//   timer: "timer",
+//   rounds: "rounds",
+//   rest: "rest",
+// };
 
 export const MESSAGES = {
   finished: "Well done!",

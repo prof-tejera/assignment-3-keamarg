@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { INPUTS, TIMERS, timerValue } from "../../utils/helpers.js";
+import { TIMERS } from "../../utils/helpers.js";
 import PropTypes from "prop-types";
 import { COLORS } from "../../utils/helpers.js";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { TimerContext } from "../../TimerProvider";
 
 const SetInput = styled.input`
@@ -18,6 +18,9 @@ const SetInput = styled.input`
   font-size: 0.8rem;
   border-radius: 0.5rem;
   border: 0px;
+  width: 4.5rem;
+  padding-left: 1.2rem;
+  margin: 0.2rem;
 `;
 
 // const Credentials = styled.p`
@@ -41,57 +44,109 @@ const Settings = (props) => {
     timerType: TIMERS.countdown,
   };
 
-  const { time, setTime } = useContext(TimerContext);
-  const { rounds, setRounds } = useContext(TimerContext);
-  const { rest, setRest } = useContext(TimerContext);
+  const { setTime } = useContext(TimerContext);
+  const { setRounds } = useContext(TimerContext);
+  const { setRest } = useContext(TimerContext);
   const { docs } = useContext(TimerContext);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [restHours, setRestHours] = useState(0);
+  const [restMinutes, setRestMinutes] = useState(0);
+  const [restSeconds, setRestSeconds] = useState(0);
 
-  //Changehandler for all settings
-  const handleChange = (e) => {
+  //Timer handler
+  const handleTimerChange = (e) => {
     if (!docs) {
-      if (e.target.name === INPUTS.timer) {
-        setTime(e.target.value);
-      } else if (e.target.name === INPUTS.rounds) {
-        setRounds(e.target.value);
-      } else {
-        setRest(e.target.value);
+      if (e.target.name === "hours") {
+        setHours(e.target.value * 3600);
+      }
+      if (e.target.name === "minutes") {
+        setMinutes(e.target.value * 60);
+      }
+      if (e.target.name === "seconds") {
+        setSeconds(Number(e.target.value));
       }
     }
   };
+
+  useEffect(() => {
+    setTime(hours + minutes + seconds);
+  }, [hours, minutes, seconds, setTime]);
+
+  //Round handler
+  const handleRoundChange = (e) => {
+    if (!docs) {
+      setRounds(e.target.value);
+    }
+  };
+
+  //Rest handler
+  const handleRestChange = (e) => {
+    if (!docs) {
+      if (e.target.name === "hours") {
+        setRestHours(e.target.value * 3600);
+      }
+      if (e.target.name === "minutes") {
+        setRestMinutes(e.target.value * 60);
+      }
+      if (e.target.name === "seconds") {
+        setRestSeconds(Number(e.target.value));
+      }
+    }
+  };
+
+  useEffect(() => {
+    setRest(restHours + restMinutes + restSeconds);
+  }, [restHours, restMinutes, restSeconds, setRest]);
 
   return (
     <div className="w-75">
       <>
         <Text>
-          <label htmlFor="timer">Set workout time</label>
-          <br />
-          {timerValue(time)}
+          <label htmlFor="hours">Set workout time</label>
         </Text>
         <SetInput
-          name="timer"
-          type="range"
+          name="hours"
+          type="number"
           min="0"
-          max="7200"
-          step="2"
-          value={time}
-          onChange={handleChange}
+          max="9"
+          step="1"
+          onChange={handleTimerChange}
+          placeholder="H"
+        ></SetInput>
+        <SetInput
+          name="minutes"
+          type="number"
+          min="0"
+          max="59"
+          step="1"
+          onChange={handleTimerChange}
+          placeholder="MM"
+        ></SetInput>
+        <SetInput
+          name="seconds"
+          type="number"
+          min="0"
+          max="59"
+          step="1"
+          onChange={handleTimerChange}
+          placeholder="SS"
         ></SetInput>
       </>
       {timerType === TIMERS.xy || timerType === TIMERS.tabata ? (
         <>
           <Text>
             <label htmlFor="rounds">Set number of rounds</label>
-            <br />
-            {rounds}
           </Text>
           <SetInput
             name="rounds"
-            type="range"
+            type="number"
             min="1"
-            max="5"
+            max="10"
             step="1"
-            value={rounds}
-            onChange={handleChange}
+            onChange={handleRoundChange}
+            placeholder="1-10"
           ></SetInput>
         </>
       ) : null}
@@ -99,18 +154,33 @@ const Settings = (props) => {
         <>
           <Text>
             <label htmlFor="rest">Set rest time</label>
-            <br />
-            {timerValue(rest)}
-            {/* {timerValue(rest).substr(4, 6)} */}
           </Text>
           <SetInput
-            name="rest"
-            type="range"
-            min="2"
-            max="300"
-            step="5"
-            value={rest}
-            onChange={handleChange}
+            name="hours"
+            type="number"
+            min="0"
+            max="9"
+            step="1"
+            onChange={handleRestChange}
+            placeholder="H"
+          ></SetInput>
+          <SetInput
+            name="minutes"
+            type="number"
+            min="0"
+            max="59"
+            step="1"
+            onChange={handleRestChange}
+            placeholder="MM"
+          ></SetInput>
+          <SetInput
+            name="seconds"
+            type="number"
+            min="0"
+            max="59"
+            step="1"
+            onChange={handleRestChange}
+            placeholder="SS"
           ></SetInput>
         </>
       ) : null}
