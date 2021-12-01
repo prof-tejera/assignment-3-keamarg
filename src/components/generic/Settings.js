@@ -18,9 +18,14 @@ const SetInput = styled.input`
   font-size: 0.8rem;
   border-radius: 0.5rem;
   border: 0px;
-  width: 4.5rem;
-  padding-left: 1.2rem;
+  width: 4rem;
+  padding-left: 1rem;
   margin: 0.2rem;
+  border: 1px solid grey;
+  border-style: outset;
+  &::-webkit-inner-spin-button {
+    opacity: 1;
+  }
 `;
 
 // const Credentials = styled.p`
@@ -107,6 +112,7 @@ const Settings = (props) => {
           <label htmlFor="hours">Set workout time</label>
         </Text>
         <SetInput
+          onKeyDown={(e) => e.preventDefault()}
           name="hours"
           type="number"
           min="0"
@@ -116,6 +122,7 @@ const Settings = (props) => {
           placeholder="H"
         ></SetInput>
         <SetInput
+          onKeyDown={(e) => e.preventDefault()}
           name="minutes"
           type="number"
           min="0"
@@ -125,6 +132,7 @@ const Settings = (props) => {
           placeholder="MM"
         ></SetInput>
         <SetInput
+          onKeyDown={(e) => e.preventDefault()}
           name="seconds"
           type="number"
           min="0"

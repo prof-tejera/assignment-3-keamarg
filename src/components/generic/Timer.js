@@ -21,8 +21,8 @@ const UpperPanel = styled.div`
   position: relative;
   height: 15rem;
   .false {
-    animation: pulse 1s ease infinite, color 1s ease;
-    animation-delay: 1s;
+    animation: pulse 1s ease 1s infinite, color 0.5s ease forwards;
+    // animation-delay: 1s;
   }
 
   @keyframes pulse {
@@ -102,7 +102,7 @@ const SettingsPanel = styled.div`
     bottom: 1rem;
     margin: 0 auto;
     background-color: transparent;
-    animation: pulse2 1s ease 2 forwards;
+    animation: pulse2 1s ease forwards;
   }
 
   @keyframes pulse2 {
@@ -125,9 +125,9 @@ const SettingsPanel = styled.div`
     bottom: 1rem;
     margin: 0 auto;
     background-color: transparent;
-    opacity: 0.2;
+    opacity: 0.1;
     :hover {
-      opacity: 0.3;
+      opacity: 0.2;
     }
   }
 
@@ -191,18 +191,16 @@ const Timer = () => {
   //Reset button
   const handleClickReset = (e) => {
     if (!docs) {
-      if (e.currentTarget.value === BTNTYPE.reset) {
-        if (timerType === TIMERS.stopwatch) {
-          setTime(0);
-        } else {
-          setTime(savedTime);
-        }
-        setBtnState(true);
-        setIsRunning(false);
-        setShowMessage(false);
-        setCurrentRound(rounds);
-        setCurrentRest(false);
+      if (timerType === TIMERS.stopwatch) {
+        setTime(0);
+      } else {
+        setTime(savedTime);
       }
+      setBtnState(true);
+      setIsRunning(false);
+      setShowMessage(false);
+      setCurrentRound(rounds);
+      setCurrentRest(false);
     }
   };
 
@@ -210,20 +208,20 @@ const Timer = () => {
   const handleClickForward = (e) => {
     if (!docs) {
       const t = Number(time);
-      if (e.currentTarget.value === BTNTYPE.forward) {
-        if (timerType === TIMERS.stopwatch) {
-          setTime(savedTime);
-          setMessage(MESSAGES.finished);
-          setShowMessage(true);
-        }
-        if (t && timerType !== TIMERS.stopwatch) {
-          setTime(0);
-          setMessage(MESSAGES.finished);
-          setShowMessage(true);
-          setCurrentRest(false);
-        }
-        setCurrentRound(0);
+      if (timerType === TIMERS.stopwatch) {
+        setTime(savedTime);
+        setMessage(MESSAGES.finished);
+        setShowMessage(true);
       }
+      if (t && timerType !== TIMERS.stopwatch) {
+        setTime(0);
+        setMessage(MESSAGES.finished);
+        setShowMessage(true);
+        setCurrentRest(false);
+      }
+      setCurrentRound(0);
+      setIsRunning(false);
+      setBtnState(true);
     }
   };
 
