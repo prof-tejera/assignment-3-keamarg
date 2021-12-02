@@ -15,9 +15,8 @@ export const SettingsBtn = css`
 export const ReadyBtn = css`
   z-index: 1;
   font-size: 3rem;
-  //   position: absolute;
   bottom: 1rem;
-  margin: 0 auto;
+  //   margin: 0 auto;
   background-color: transparent;
   animation: PulseAnim2 1s ease forwards;
 `;
@@ -25,9 +24,8 @@ export const ReadyBtn = css`
 export const NotReadyBtn = css`
   z-index: 1;
   font-size: 3rem;
-  //   position: absolute;
   bottom: 1rem;
-  margin: 0 auto;
+  //   margin: 0 auto;
   background-color: transparent;
   opacity: 0.1;
   :hover {

@@ -151,7 +151,7 @@ const Timer = () => {
   };
 
   //Forward button
-  const handleClickForward = (e) => {
+  const handleClickForward = () => {
     if (!docs) {
       const t = Number(time);
       if (timerType === TIMERS.stopwatch) {

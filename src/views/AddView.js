@@ -6,7 +6,7 @@ import Panel from "../components/generic/Panel";
 import { TimerContext } from "../TimerProvider";
 import Button from "../components/generic/Button";
 import { BTNTYPE, COLORS } from "../utils/helpers.js";
-import { ReadyBtn, NotReadyBtn } from "../utils/css.js";
+import { ReadyBtn, NotReadyBtn, PulseAnim2 } from "../utils/css.js";
 
 const Container = styled.div`
   display: flex;
@@ -15,11 +15,14 @@ const Container = styled.div`
 `;
 
 const AddPanel = styled.div`
+  position: relative;
   height: 25rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   .readyBtn {
     ${ReadyBtn}
   }
+  ${PulseAnim2}
+
   .notReadyBtn {
     ${NotReadyBtn}
   }
@@ -27,6 +30,13 @@ const AddPanel = styled.div`
 
 const Title = styled.h1`
   color: ${COLORS.text};
+`;
+
+const Selector = styled.select`
+  border: 1px solid grey;
+  border-style: outset;
+  border-radius: 5px;
+  padding: 0.2rem 1rem 0.2rem 1rem;
 `;
 
 const Add = () => {
@@ -57,6 +67,10 @@ const Add = () => {
     }
   };
 
+  const handleClick = (e) => {
+    console.log(e.target);
+  };
+
   useEffect(() => {
     console.log(timerType);
   }, [timerType]);
@@ -76,7 +90,7 @@ const Add = () => {
       <Panel>
         <AddPanel className="text-center">
           <Title>Add timer</Title>
-          <select
+          <Selector
             name="timers"
             id="timers"
             value={timerType}
@@ -86,28 +100,28 @@ const Add = () => {
             <option value={TIMERS.countdown}>Countdown</option>
             <option value={TIMERS.xy}>XY</option>
             <option value={TIMERS.tabata}>Tabata</option>
-          </select>
+          </Selector>
           <div className="text-center">
             <Settings></Settings>
           </div>
           {time > 0 && timerType !== TIMERS.tabata ? (
             <Button
               styleName="readyBtn"
-              value={BTNTYPE.ready}
-              // onClick={handleClickSettingsReady}
+              value={BTNTYPE.add}
+              onClick={handleClick}
             ></Button>
-          ) : rest > 0 ? (
+          ) : time > 0 && rest > 0 ? (
             <Button
               styleName="readyBtn"
-              value={BTNTYPE.ready}
-              // onClick={handleClickSettingsReady}
+              value={BTNTYPE.add}
+              onClick={handleClick}
             ></Button>
           ) : (
             <Button
               styleName="notReadyBtn"
               value={BTNTYPE.notReady}
               disabled={true}
-              // onClick={handleClickSettingsReady}
+              onClick={handleClick}
             ></Button>
           )}
         </AddPanel>

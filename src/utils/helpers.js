@@ -28,6 +28,7 @@ export const BUTTONS = {
   ready: "bi bi-check-circle",
   back: "bi bi-arrow-left-circle",
   notReady: "bi bi-circle",
+  add: "bi bi-plus-circle",
 };
 
 export const BTNTYPE = {
@@ -39,6 +40,7 @@ export const BTNTYPE = {
   ready: "ready",
   back: "back",
   notReady: "notReady",
+  add: "add",
 };
 
 export const TIMERS = {
