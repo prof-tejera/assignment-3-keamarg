@@ -1,6 +1,15 @@
 import React, { useContext } from "react";
 import { TimerContext } from "../../TimerProvider";
 import styled from "styled-components";
+import {
+  PulseAnim,
+  PulseAnim2,
+  ColorAnim,
+  SettingsBtn,
+  NotReadyBtn,
+  BackBtn,
+  ReadyBtn,
+} from "../../utils/css";
 import Panel from "../generic/Panel";
 import Settings from "../generic/Settings";
 import Button from "../generic/Button";
@@ -21,34 +30,10 @@ const UpperPanel = styled.div`
   position: relative;
   height: 15rem;
   .false {
-    animation: pulse 1s ease 1s infinite, color 0.5s ease forwards;
-    // animation-delay: 1s;
+    animation: PulseAnim 1s ease 1s infinite, ColorAnim 0.5s ease forwards;
   }
-
-  @keyframes pulse {
-    0% {
-      color: ${COLORS.stop};
-      transform: scale(1);
-    }
-    10% {
-      color: ${COLORS.stop};
-      transform: scale(1.1);
-    }
-
-    100% {
-      color: ${COLORS.stop};
-      transform: scale(1);
-    }
-  }
-
-  @keyframes color {
-    0% {
-      color: black;
-    }
-    100% {
-      color: ${COLORS.stop};
-    }
-  }
+  ${PulseAnim};
+  ${ColorAnim};
 
   i.stopwatch {
     font-size: 10rem;
@@ -56,13 +41,7 @@ const UpperPanel = styled.div`
     display: block;
   }
   .settingsBtn {
-    z-index: 1;
-    font-size: 1.5rem;
-    // display: block;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: transparent;
+    ${SettingsBtn}
   }
 `;
 const LowerPanel = styled.div`
@@ -88,56 +67,22 @@ const SettingsPanel = styled.div`
   position: relative;
   height: 25rem;
   .settingsBtn {
-    z-index: 1;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: transparent;
+    ${SettingsBtn}
   }
   .readyBtn {
-    z-index: 1;
-    font-size: 3rem;
     position: absolute;
-    bottom: 1rem;
-    margin: 0 auto;
-    background-color: transparent;
-    animation: pulse2 1s ease forwards;
+    ${ReadyBtn}
   }
 
-  @keyframes pulse2 {
-    0% {
-      color: ${COLORS.start};
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-      color: ${COLORS.start};
-    }
-  }
+  ${PulseAnim2}
 
   .notReadyBtn {
-    z-index: 1;
-    font-size: 3rem;
     position: absolute;
-    bottom: 1rem;
-    margin: 0 auto;
-    background-color: transparent;
-    opacity: 0.1;
-    :hover {
-      opacity: 0.2;
-    }
+    ${NotReadyBtn}
   }
 
   .backBtn {
-    z-index: 1;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: transparent;
+    ${BackBtn}
   }
 `;
 const Message = styled.p`
@@ -162,6 +107,7 @@ const Timer = () => {
   const { showTimerRounds, setShowTimerRounds } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
   const { timerType } = useContext(TimerContext);
+  const { rest } = useContext(TimerContext);
 
   // Click handler for all buttons (refactored to seperate handlers)
 
@@ -358,7 +304,13 @@ const Timer = () => {
           value={BTNTYPE.back}
         ></Button>
         <Settings styleName="p-2" timerType={timerType}></Settings>
-        {time > 0 ? (
+        {time > 0 && timerType !== TIMERS.tabata ? (
+          <Button
+            styleName="readyBtn"
+            value={BTNTYPE.ready}
+            onClick={handleClickSettingsReady}
+          ></Button>
+        ) : rest > 0 ? (
           <Button
             styleName="readyBtn"
             value={BTNTYPE.ready}

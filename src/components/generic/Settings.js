@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TIMERS } from "../../utils/helpers.js";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { COLORS } from "../../utils/helpers.js";
 import React, { useContext, useState, useEffect } from "react";
 import { TimerContext } from "../../TimerProvider";
@@ -43,16 +43,17 @@ const Text = styled.p`
 `;
 
 const Settings = (props) => {
-  const { timerType } = props;
+  // const { timerType } = props;
 
-  Settings.defaultProps = {
-    timerType: TIMERS.countdown,
-  };
+  // Settings.defaultProps = {
+  //   timerType: TIMERS.countdown,
+  // };
 
   const { setTime } = useContext(TimerContext);
   const { setRounds } = useContext(TimerContext);
   const { setRest } = useContext(TimerContext);
   const { docs } = useContext(TimerContext);
+  const { timerType } = useContext(TimerContext);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -105,8 +106,9 @@ const Settings = (props) => {
     setRest(restHours + restMinutes + restSeconds);
   }, [restHours, restMinutes, restSeconds, setRest]);
 
+  // Inputs will not work on mobile due to the onKeyDown, preventing keyboard input
   return (
-    <div className="w-75">
+    <div className="w-100">
       <>
         <Text>
           <label htmlFor="hours">Set workout time</label>
@@ -158,7 +160,7 @@ const Settings = (props) => {
           ></SetInput>
         </>
       ) : null}
-      {props.timerType === TIMERS.tabata ? (
+      {timerType === TIMERS.tabata ? (
         <>
           <Text>
             <label htmlFor="rest">Set rest time</label>
@@ -197,8 +199,8 @@ const Settings = (props) => {
   );
 };
 
-Settings.propTypes = {
-  timerType: PropTypes.string,
-};
+// Settings.propTypes = {
+//   timerType: PropTypes.string,
+// };
 
 export default Settings;
