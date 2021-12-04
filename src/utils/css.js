@@ -64,14 +64,14 @@ export const PulseAnim = css`
 export const PulseAnim2 = css`
   @keyframes PulseAnim2 {
     0% {
-      color: ${COLORS.start};
+      color: ${COLORS.text};
     }
     50% {
       transform: scale(1.1);
     }
     100% {
       transform: scale(1);
-      color: ${COLORS.start};
+      color: ${COLORS.text};
     }
   }
 `;
@@ -83,6 +83,37 @@ export const ColorAnim = css`
     }
     100% {
       color: ${COLORS.stop};
+    }
+  }
+`;
+
+export const FadeIn = css`
+  @keyframes FadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+export const Bounce = css`
+  @keyframes Bounce {
+    0% {
+      top: 0rem;
+    }
+    25% {
+      top: 0.5rem;
+    }
+    50% {
+      top: 0rem;
+    }
+    75% {
+      top: 0.5rem;
+    }
+    100% {
+      top: 0rem;
     }
   }
 `;

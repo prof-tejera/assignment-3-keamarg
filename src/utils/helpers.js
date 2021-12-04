@@ -29,6 +29,8 @@ export const BUTTONS = {
   back: "bi bi-arrow-left-circle",
   notReady: "bi bi-circle",
   add: "bi bi-plus-circle",
+  arrowUp: "bi bi-arrow-up-circle-fill",
+  queue: "bi bi-bicycle",
 };
 
 export const BTNTYPE = {
@@ -41,6 +43,8 @@ export const BTNTYPE = {
   back: "back",
   notReady: "notReady",
   add: "add",
+  arrowUp: "arrowUp",
+  queue: "queue",
 };
 
 export const TIMERS = {
@@ -67,6 +71,12 @@ export const MESSAGES = {
   boost3: "Ya call that working?",
   boost4: "Come on!",
   boost5: "Keep going!",
+};
+
+export const STATUS = {
+  waiting: "waiting",
+  running: "running",
+  done: "done",
 };
 
 // Function for converting the seconds to a more human friendly format

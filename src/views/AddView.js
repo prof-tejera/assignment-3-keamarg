@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { TIMERS } from "../utils/helpers";
+import { TIMERS, STATUS } from "../utils/helpers";
 import Settings from "../components/generic/Settings";
 import Panel from "../components/generic/Panel";
 import { TimerContext } from "../TimerProvider";
@@ -44,6 +44,7 @@ const Add = () => {
   const { time } = useContext(TimerContext);
   const { rounds } = useContext(TimerContext);
   const { rest } = useContext(TimerContext);
+  const { timers, setTimers } = useContext(TimerContext);
 
   const handleChange = (e) => {
     switch (e.target.value) {
@@ -69,22 +70,28 @@ const Add = () => {
 
   const handleClick = (e) => {
     console.log(e.target);
+    console.log(
+      "Type: " +
+        timerType +
+        " Time: " +
+        time +
+        " Rounds: " +
+        rounds +
+        " Rest: " +
+        rest
+    );
+    const id = timers.length;
+    console.log(timers);
+    setTimers(() => [
+      ...timers,
+      { id, timerType, time, rounds, rest, status: STATUS.waiting },
+    ]);
   };
 
   useEffect(() => {
     console.log(timerType);
   }, [timerType]);
 
-  console.log(
-    "Type: " +
-      timerType +
-      " Time: " +
-      time +
-      " Rounds: " +
-      rounds +
-      " Rest: " +
-      rest
-  );
   return (
     <Container>
       <Panel>
@@ -121,7 +128,6 @@ const Add = () => {
               styleName="notReadyBtn"
               value={BTNTYPE.notReady}
               disabled={true}
-              onClick={handleClick}
             ></Button>
           )}
         </AddPanel>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TimerContext } from "../../TimerProvider";
 import styled from "styled-components";
 import {
@@ -14,6 +14,7 @@ import Panel from "../generic/Panel";
 import Settings from "../generic/Settings";
 import Button from "../generic/Button";
 import DisplayTime from "../generic/DisplayTime";
+import Intro from "../generic/Intro";
 import {
   BTNTYPE,
   COLORS,
@@ -91,7 +92,7 @@ const Message = styled.p`
   font-size:1.5rem;
 `;
 
-const Timer = () => {
+const Timer = (props) => {
   const { time, setTime } = useContext(TimerContext);
   const { isRunning, setIsRunning } = useContext(TimerContext);
   const { btnState, setBtnState } = useContext(TimerContext);
@@ -106,8 +107,16 @@ const Timer = () => {
     useContext(TimerContext);
   const { showTimerRounds, setShowTimerRounds } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
-  const { timerType } = useContext(TimerContext);
+  const { timerType, setTimerType } = useContext(TimerContext);
   const { rest } = useContext(TimerContext);
+  const { intro } = useContext(TimerContext);
+
+  //make sure the timer is set correctly when entering direct URL
+  useEffect(() => {
+    if (props.match.path.slice(1)) {
+      setTimerType(props.match.path.slice(1));
+    }
+  }, [setTimerType, props.match.path]);
 
   // Click handler for all buttons (refactored to seperate handlers)
 
@@ -219,7 +228,9 @@ const Timer = () => {
   useTimer(timerType);
 
   // Base strucure for all timers
-  if (!settingsState) {
+  if (intro) {
+    return <Intro></Intro>;
+  } else if (!settingsState) {
     return (
       <Panel timerType={timerType}>
         <UpperPanel className="text-center">
@@ -310,7 +321,7 @@ const Timer = () => {
             value={BTNTYPE.ready}
             onClick={handleClickSettingsReady}
           ></Button>
-        ) : rest > 0 ? (
+        ) : time > 0 && rest > 0 ? (
           <Button
             styleName="readyBtn"
             value={BTNTYPE.ready}

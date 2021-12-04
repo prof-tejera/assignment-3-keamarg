@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Timer from "../components/generic/Timer";
 import Navbar from "../components/generic/Navbar";
+// import Intro from "../components/generic/Intro";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const Timers = styled.div`

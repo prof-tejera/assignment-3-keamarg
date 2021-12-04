@@ -6,6 +6,7 @@ import { TimerContext } from "./TimerProvider";
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
 import AddView from "./views/AddView";
+// import { TIMERS } from "./utils/helpers";
 
 const Container = styled.div`
   background: #f0f6fb;
@@ -15,14 +16,22 @@ const Container = styled.div`
 
 // Clichandler for setting a variable, that helps avoid problems when clicking on components in the docs view
 const App = () => {
+  const { setDocs } = useContext(TimerContext);
+  const { setIntro } = useContext(TimerContext);
+
+  // const { setTimerType } = useContext(TimerContext);
+
   const handleClick = (e) => {
+    // setTimerType(TIMERS.stopwatch);
     if (e.target.innerHTML === "Documentation") {
       setDocs(true);
     } else {
       setDocs(false);
     }
+    if (e.target.innerHTML === "Timers") {
+      setIntro(true);
+    }
   };
-  const { setDocs } = useContext(TimerContext);
 
   return (
     <Container>

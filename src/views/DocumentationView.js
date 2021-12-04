@@ -7,7 +7,7 @@ import Loading from "../components/generic/Loading";
 import Button from "../components/generic/Button";
 import DisplayTime from "../components/generic/DisplayTime";
 import Panel from "../components/generic/Panel";
-import Timer from "../components/generic/Timer";
+// import Timer from "../components/generic/Timer";
 import Settings from "../components/generic/Settings";
 import Navbar from "../components/generic/Navbar";
 
@@ -94,7 +94,8 @@ const Documentation = () => {
         />
         <DocumentComponent
           title="Timer"
-          component={<Timer />}
+          //The Timer component is outcommented, as the DocumentationView kept blowing up due to a useEffect in Timer, where I referenced "props.match.path", you can outcomment the line below and the timer import at the top to see what I mean.
+          // component={<Timer />}
           propDocs={[
             {
               prop: "timerType",

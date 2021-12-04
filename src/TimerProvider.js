@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+// import { TIMERS, STATUS } from "./utils/helpers";
 
 export const TimerContext = createContext({
   setBtnState: () => {
@@ -39,10 +40,37 @@ const TimerProvider = ({ children }) => {
       ? localStorage.getItem("timerType")
       : "Stopwatch"
   );
+  const [intro, setIntro] = useState(true);
+
+  //States for assignment 3 (would it be better to split into separate providers? And if so, why?)
+
+  const [timers, setTimers] = useState([
+    //seeds
+    // {
+    //   id: 0,
+    //   timerType: TIMERS.stopwatch,
+    //   time: 10,
+    //   rounds: 1,
+    //   rest: 0,
+    //   status: STATUS.waiting,
+    // },
+    // {
+    //   id: 1,
+    //   timerType: TIMERS.tabata,
+    //   time: 10,
+    //   rounds: 1,
+    //   rest: 5,
+    //   status: STATUS.waiting,
+    // },
+  ]);
 
   return (
     <TimerContext.Provider
       value={{
+        timers,
+        setTimers,
+        intro,
+        setIntro,
         timerType,
         setTimerType,
         currentRest,

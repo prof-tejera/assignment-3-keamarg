@@ -106,7 +106,7 @@ const Settings = (props) => {
     setRest(restHours + restMinutes + restSeconds);
   }, [restHours, restMinutes, restSeconds, setRest]);
 
-  // Inputs will not work on mobile due to the onKeyDown, preventing keyboard input
+  // Inputs will not work on mobile with onKeyDown, preventing keyboard input
   return (
     <div className="w-100">
       <>
@@ -114,7 +114,7 @@ const Settings = (props) => {
           <label htmlFor="hours">Set workout time</label>
         </Text>
         <SetInput
-          onKeyDown={(e) => e.preventDefault()}
+          // onKeyDown={(e) => e.preventDefault()}
           name="hours"
           type="number"
           min="0"
@@ -124,7 +124,7 @@ const Settings = (props) => {
           placeholder="H"
         ></SetInput>
         <SetInput
-          onKeyDown={(e) => e.preventDefault()}
+          // onKeyDown={(e) => e.preventDefault()}
           name="minutes"
           type="number"
           min="0"
@@ -134,7 +134,7 @@ const Settings = (props) => {
           placeholder="MM"
         ></SetInput>
         <SetInput
-          onKeyDown={(e) => e.preventDefault()}
+          // onKeyDown={(e) => e.preventDefault()}
           name="seconds"
           type="number"
           min="0"
