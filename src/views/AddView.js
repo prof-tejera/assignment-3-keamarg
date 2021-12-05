@@ -1,17 +1,44 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { TIMERS, STATUS } from "../utils/helpers";
+import { BTNTYPE, COLORS, TIMERS, STATUS } from "../utils/helpers";
 import Settings from "../components/generic/Settings";
 import Panel from "../components/generic/Panel";
+import TimerQueue from "../components/generic/TimerQueue";
 import { TimerContext } from "../TimerProvider";
 import Button from "../components/generic/Button";
-import { BTNTYPE, COLORS } from "../utils/helpers.js";
 import { ReadyBtn, NotReadyBtn, PulseAnim2 } from "../utils/css.js";
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  width: 100%;
+  align-items: center;
+  justify-content: left;
+  gap: 5rem;
+  margin-left: 10rem;
+`;
+
+// const Timers = styled.div``;
+
+const Queue = styled.div`
+  width: 20rem;
+  flex-direction: column;
+  align-self: flex-start;
+
+  .${TIMERS.stopwatch} {
+    background-color: ${COLORS.stopwatch};
+  }
+  .${TIMERS.countdown} {
+    background-color: ${COLORS.countdown};
+  }
+  .${TIMERS.xy} {
+    background-color: ${COLORS.xy};
+  }
+  .${TIMERS.tabata} {
+    background-color: ${COLORS.tabata};
+  }
+  .empty {
+    background-color: gray;
+    opacity: 0.5;
+  }
 `;
 
 const AddPanel = styled.div`
@@ -28,7 +55,7 @@ const AddPanel = styled.div`
   }
 `;
 
-const Title = styled.h1`
+const Text = styled.h1`
   color: ${COLORS.text};
 `;
 
@@ -69,34 +96,23 @@ const Add = () => {
   };
 
   const handleClick = (e) => {
-    console.log(e.target);
-    console.log(
-      "Type: " +
-        timerType +
-        " Time: " +
-        time +
-        " Rounds: " +
-        rounds +
-        " Rest: " +
-        rest
-    );
     const id = timers.length;
-    console.log(timers);
-    setTimers(() => [
-      ...timers,
-      { id, timerType, time, rounds, rest, status: STATUS.waiting },
-    ]);
+    if (timers.length < 8) {
+      setTimers(() => [
+        ...timers,
+        { id, timerType, time, rounds, rest, status: STATUS.waiting },
+      ]);
+    }
   };
-
-  useEffect(() => {
-    console.log(timerType);
-  }, [timerType]);
 
   return (
     <Container>
-      <Panel>
+      <Queue>
+        <TimerQueue> </TimerQueue>
+      </Queue>
+      <Panel timerType={timerType}>
         <AddPanel className="text-center">
-          <Title>Add timer</Title>
+          <Text>Add timer</Text>
           <Selector
             name="timers"
             id="timers"
@@ -130,6 +146,7 @@ const Add = () => {
               disabled={true}
             ></Button>
           )}
+          {timers.length > 7 ? <Text>Limit reached</Text> : null}
         </AddPanel>
       </Panel>
     </Container>

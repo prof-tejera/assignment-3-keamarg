@@ -31,6 +31,8 @@ const App = () => {
     if (e.target.innerHTML === "Timers") {
       setIntro(true);
     }
+    if (e.target.innerHTML === "Add") {
+    }
   };
 
   return (

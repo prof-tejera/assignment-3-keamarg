@@ -2,17 +2,11 @@ import React, { useContext } from "react";
 import { TimerContext } from "../../TimerProvider";
 import Panel from "../generic/Panel";
 import Button from "../generic/Button";
+import AddView from "../../views/AddView";
 import styled from "styled-components";
 import { FadeIn, Bounce, ReadyBtn, PulseAnim2 } from "../../utils/css";
+import { BUTTONS, BTNTYPE, COLORS, TIMERS } from "../../utils/helpers";
 import { useHistory } from "react-router-dom";
-
-import {
-  BUTTONS,
-  BTNTYPE,
-  COLORS,
-  TIMERS,
-  timerValue,
-} from "../../utils/helpers";
 
 const Text = styled.h1`
   color: ${COLORS.text};
@@ -26,7 +20,7 @@ const Choice1 = styled.div`
 
 const Choice2 = styled.div`
   opacity: 0;
-  animation: FadeIn 2s ease 2s forwards;
+  animation: FadeIn 2s ease 1s forwards;
   .readyBtn {
     color: ${COLORS.text};
     ${ReadyBtn}
@@ -34,7 +28,7 @@ const Choice2 = styled.div`
 `;
 const UpperPanel = styled.div`
   padding-top: 1rem;
-  height: 15rem;
+  height: 22.5rem;
   text-align: center;
   ${FadeIn};
   ${Bounce};
@@ -52,7 +46,7 @@ const Intro = () => {
   const { setIntro } = useContext(TimerContext);
   const { timers } = useContext(TimerContext);
   const { setTime } = useContext(TimerContext);
-  const { savedTime, setSavedTime } = useContext(TimerContext);
+  const { setSavedTime } = useContext(TimerContext);
   const { setSettingsState } = useContext(TimerContext);
   const { btnState, setBtnState } = useContext(TimerContext);
   const { setIsRunning } = useContext(TimerContext);
@@ -62,10 +56,7 @@ const Intro = () => {
 
   const history = useHistory();
 
-  const handleClick = () => {
-    // console.log(typeof time + " " + time);
-    // console.log(savedTime);
-
+  const handleNavClick = () => {
     //I think this should be put in helpers and used in the useInterval hook as well
     if (timers.length > 0) {
       setTime(timers[0].time);
@@ -105,8 +96,10 @@ const Intro = () => {
           break;
       }
     }
+  };
 
-    // setTimerType(TIMERS.countdown);
+  const handleAddClick = () => {
+    history.push(`/add`);
   };
   return (
     <Panel timerType={timerType}>
@@ -122,11 +115,18 @@ const Intro = () => {
               <Button
                 styleName="readyBtn"
                 value={BTNTYPE.start}
-                onClick={handleClick}
+                onClick={handleNavClick}
               ></Button>
             </span>
           ) : (
-            <Text>... or add to queue</Text>
+            <span>
+              <Text>... or add to queue</Text>
+              <Button
+                styleName="readyBtn"
+                value={BTNTYPE.add}
+                onClick={handleAddClick}
+              ></Button>
+            </span>
           )}
         </Choice2>
       </UpperPanel>

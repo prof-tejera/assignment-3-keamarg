@@ -7,14 +7,6 @@ import { TimerContext } from "../../TimerProvider";
 
 const SetInput = styled.input`
   // border: 1px solid black;
-  color: ${(props) =>
-    props.type === TIMERS.stopwatch
-      ? COLORS.stopwatch
-      : props.type === TIMERS.countdown
-      ? COLORS.countdown
-      : props.type === TIMERS.xy
-      ? COLORS.xy
-      : COLORS.tabata};
   font-size: 0.8rem;
   border-radius: 0.5rem;
   border: 0px;
