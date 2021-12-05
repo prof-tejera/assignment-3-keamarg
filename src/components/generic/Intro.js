@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { TimerContext } from "../../TimerProvider";
 import Panel from "../generic/Panel";
 import Button from "../generic/Button";
-import AddView from "../../views/AddView";
 import styled from "styled-components";
 import { FadeIn, Bounce, ReadyBtn, PulseAnim2 } from "../../utils/css";
 import { BUTTONS, BTNTYPE, COLORS, TIMERS } from "../../utils/helpers";
