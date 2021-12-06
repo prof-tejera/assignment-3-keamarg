@@ -41,6 +41,7 @@ const TimerProvider = ({ children }) => {
       : "Stopwatch"
   );
   const [intro, setIntro] = useState(true);
+  const [activeTimer, setActiveTimer] = useState(true);
 
   //States for assignment 3 (would it be better to split into separate providers? And if so, why?)
 
@@ -52,7 +53,7 @@ const TimerProvider = ({ children }) => {
     //   time: 10,
     //   rounds: 1,
     //   rest: 0,
-    //   status: STATUS.waiting,
+    //   status: STATUS.notRunning,
     // },
     // {
     //   id: 1,
@@ -60,13 +61,15 @@ const TimerProvider = ({ children }) => {
     //   time: 10,
     //   rounds: 1,
     //   rest: 5,
-    //   status: STATUS.waiting,
+    //   status: STATUS.notRunning,
     // },
   ]);
 
   return (
     <TimerContext.Provider
       value={{
+        activeTimer,
+        setActiveTimer,
         timers,
         setTimers,
         intro,

@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { COLORS } from "../utils/helpers";
+import { COLORS, TIMERS } from "../utils/helpers";
 
 //buttons
 
@@ -115,5 +115,48 @@ export const Bounce = css`
     100% {
       top: 0rem;
     }
+  }
+`;
+
+export const QueueStyle = css`
+  width: 20rem;
+  flex-direction: column;
+  align-self: flex-start;
+  user-select: none;
+
+  .${TIMERS.stopwatch} {
+    background-color: ${COLORS.stopwatch};
+  }
+  .${TIMERS.countdown} {
+    background-color: ${COLORS.countdown};
+  }
+  .${TIMERS.xy} {
+    background-color: ${COLORS.xy};
+  }
+  .${TIMERS.tabata} {
+    background-color: ${COLORS.tabata};
+  }
+  .empty {
+    background-color: rgba(112, 112, 112, 0.5);
+  }
+  .loadBtn {
+    text-align: right;
+    float: right;
+  }
+  .Stopwatch:hover,
+  .Countdown:hover,
+  .XY:hover,
+  .Tabata:hover {
+    // background-color: rgba(255, 0, 0, 0.3);
+    opacity: 0.5;
+  }
+  .Stopwatch:hover::before,
+  .Countdown:hover::before,
+  .XY:hover::before,
+  .Tabata:hover::before {
+    content: "\u2716";
+    text-align: right;
+    float: right;
+    color: rgba(255, 0, 0, 0.8);
   }
 `;

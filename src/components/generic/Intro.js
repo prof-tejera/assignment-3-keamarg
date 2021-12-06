@@ -4,7 +4,7 @@ import Panel from "../generic/Panel";
 import Button from "../generic/Button";
 import styled from "styled-components";
 import { FadeIn, Bounce, ReadyBtn, PulseAnim2 } from "../../utils/css";
-import { BUTTONS, BTNTYPE, COLORS, TIMERS } from "../../utils/helpers";
+import { BUTTONS, BTNTYPE, COLORS, TIMERS, STATUS } from "../../utils/helpers";
 import { useHistory } from "react-router-dom";
 
 const Text = styled.h1`
@@ -43,7 +43,7 @@ const Arrow = styled.i`
 const Intro = () => {
   const { timerType, setTimerType } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
-  const { timers } = useContext(TimerContext);
+  const { timers, setTimers } = useContext(TimerContext);
   const { setTime } = useContext(TimerContext);
   const { setSavedTime } = useContext(TimerContext);
   const { setSettingsState } = useContext(TimerContext);
@@ -55,10 +55,25 @@ const Intro = () => {
 
   const history = useHistory();
 
+  const updateQueue = () => {
+    setTimers((prevTimers) => [
+      (prevTimers[0] = {
+        id: 0,
+        timerType: timers[0].timerType,
+        time: timers[0].time,
+        rounds: timers[0].rounds,
+        rest: timers[0].rest,
+        status: STATUS.running,
+      }),
+      ...prevTimers.slice(1),
+    ]);
+  };
+
   const handleNavClick = () => {
     //I think this should be put in helpers and used in the useInterval hook as well
     if (timers.length > 0) {
       setTime(timers[0].time);
+      updateQueue();
       setSavedTime(timers[0].time);
       setIntro(false);
       setSettingsState(false);

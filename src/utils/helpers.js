@@ -30,7 +30,7 @@ export const BUTTONS = {
   notReady: "bi bi-circle",
   add: "bi bi-plus-circle",
   arrowUp: "bi bi-arrow-up-circle-fill",
-  queue: "bi bi-bicycle",
+  queue: "bi bi-stack",
 };
 
 export const BTNTYPE = {
@@ -74,9 +74,9 @@ export const MESSAGES = {
 };
 
 export const STATUS = {
-  waiting: "waiting",
+  completed: "completed",
   running: "running",
-  done: "done",
+  notRunning: "not running",
 };
 
 // Function for converting the seconds to a more human friendly format

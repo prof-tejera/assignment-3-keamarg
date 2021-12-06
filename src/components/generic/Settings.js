@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { TIMERS } from "../../utils/helpers.js";
-// import PropTypes from "prop-types";
 import { COLORS } from "../../utils/helpers.js";
 import React, { useContext, useState, useEffect } from "react";
 import { TimerContext } from "../../TimerProvider";
@@ -19,13 +18,6 @@ const SetInput = styled.input`
     opacity: 1;
   }
 `;
-
-// const Credentials = styled.p`
-//   font-size: 0.8rem;
-//   color: ${COLORS.text};
-//   padding-top: 0.5rem;
-// `;
-
 const Text = styled.p`
   font-size: 1rem;
   color: ${COLORS.text};
@@ -34,13 +26,7 @@ const Text = styled.p`
   margin-block-end: 0;
 `;
 
-const Settings = (props) => {
-  // const { timerType } = props;
-
-  // Settings.defaultProps = {
-  //   timerType: TIMERS.countdown,
-  // };
-
+const Settings = () => {
   const { setTime } = useContext(TimerContext);
   const { setRounds } = useContext(TimerContext);
   const { setRest } = useContext(TimerContext);

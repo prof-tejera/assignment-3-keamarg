@@ -6,7 +6,7 @@ import Panel from "../components/generic/Panel";
 import TimerQueue from "../components/generic/TimerQueue";
 import { TimerContext } from "../TimerProvider";
 import Button from "../components/generic/Button";
-import { ReadyBtn, NotReadyBtn, PulseAnim2 } from "../utils/css.js";
+import { ReadyBtn, NotReadyBtn, PulseAnim2, QueueStyle } from "../utils/css.js";
 
 const Container = styled.div`
   display: flex;
@@ -16,29 +16,8 @@ const Container = styled.div`
   margin-left: 10rem;
 `;
 
-// const Timers = styled.div``;
-
 const Queue = styled.div`
-  width: 20rem;
-  flex-direction: column;
-  align-self: flex-start;
-
-  .${TIMERS.stopwatch} {
-    background-color: ${COLORS.stopwatch};
-  }
-  .${TIMERS.countdown} {
-    background-color: ${COLORS.countdown};
-  }
-  .${TIMERS.xy} {
-    background-color: ${COLORS.xy};
-  }
-  .${TIMERS.tabata} {
-    background-color: ${COLORS.tabata};
-  }
-  .empty {
-    background-color: gray;
-    opacity: 0.5;
-  }
+.${QueueStyle}
 `;
 
 const AddPanel = styled.div`
@@ -100,8 +79,9 @@ const Add = () => {
     if (timers.length < 8) {
       setTimers(() => [
         ...timers,
-        { id, timerType, time, rounds, rest, status: STATUS.waiting },
+        { id, timerType, time, rounds, rest, status: STATUS.notRunning },
       ]);
+      localStorage.setItem("timerQueue", JSON.stringify(timers));
     }
   };
 

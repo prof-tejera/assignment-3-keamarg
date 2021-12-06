@@ -1,8 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TimerContext } from "../../TimerProvider";
 import styled from "styled-components";
-import { COLORS, timerValue } from "../../utils/helpers";
+import { COLORS, timerValue, BTNTYPE } from "../../utils/helpers";
+import Button from "../generic/Button";
 
+const Title = styled.h1`
+  color: ${COLORS.text};
+  font-size: 2rem;
+`;
+
+const Queue = styled.div`
+  width: 19rem;
+`;
 const Item = styled.div`
   color: ${COLORS.text};
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -13,6 +22,7 @@ const Item = styled.div`
 
 const TimerQueue = () => {
   const { timers, setTimers } = useContext(TimerContext);
+  const { intro, setIntro } = useContext(TimerContext);
   const [totalTime, setTotalTime] = useState(0);
 
   const removeItem = (id) => {
@@ -34,9 +44,14 @@ const TimerQueue = () => {
     }
   }, [timers]);
 
+  const clickHandler = () => {
+    setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+    setIntro(true);
+  };
+
   return (
-    <div>
-      <h2>Queue ({timerValue(totalTime)})</h2>
+    <Queue>
+      <Title>Queue ({timerValue(totalTime)})</Title>
       {timers.length > 0 ? (
         timers.map((item, key) => (
           <Item
@@ -45,13 +60,21 @@ const TimerQueue = () => {
             onClick={() => removeItem(item.id)}
             className={item.timerType}
           >
-            {key + 1} Timer: {item.timerType}, Status: {item.status}
+            {key + 1} {item.timerType}, Status: {item.status}
           </Item>
         ))
       ) : (
-        <Item className="empty">Nothing in queue...</Item>
+        <Item className="empty">
+          <span>Queue empty...</span>
+          <Button
+            onClick={clickHandler}
+            inner="Load last? "
+            value={BTNTYPE.queue}
+            styleName="loadBtn"
+          ></Button>
+        </Item>
       )}
-    </div>
+    </Queue>
   );
 };
 

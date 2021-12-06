@@ -85,11 +85,14 @@ const Navbar = () => {
   const { setCurrentRest } = useContext(TimerContext);
   const { setTimerType } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
+  const { setTimers } = useContext(TimerContext);
 
   // Click handler for the navbar
   const handleClick = (e) => {
     if (!docs) {
       setTime(0);
+      setTimers([]);
+      setShowTimerRounds();
       setRounds(1);
       setRest(10);
       setIsRunning(false);

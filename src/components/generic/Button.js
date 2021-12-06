@@ -6,8 +6,8 @@ import { COLORS, BUTTONS, BTNTYPE } from "../../utils/helpers";
 const Btn = styled.button`
   border-radius: 0.3rem;
   border: none;
-  font-size: 1.5rem;
-  font-weight: bold;
+  // font-size: 1.5rem;
+  // font-weight: bold;
   color: ${COLORS.text};
   transition: 0.2s ease;
   :hover {

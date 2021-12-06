@@ -1,8 +1,8 @@
 import { useContext, useRef, useEffect, useState } from "react";
 import { TimerContext } from "../TimerProvider";
-import { TIMERS, getMessage, MESSAGES } from "./helpers";
+import { TIMERS, getMessage, MESSAGES, STATUS } from "./helpers";
 
-export const useTimer = (timerType) => {
+export const useTimer = () => {
   const [delay] = useState(1000);
   const { isRunning, setIsRunning } = useContext(TimerContext);
   const { time, setTime } = useContext(TimerContext);
@@ -12,19 +12,54 @@ export const useTimer = (timerType) => {
   const { currentRound, setCurrentRound } = useContext(TimerContext);
   const { savedTime } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
-  const { rest } = useContext(TimerContext);
+  const { rest, setRest } = useContext(TimerContext);
+  const { timers, setTimers } = useContext(TimerContext);
+  const { timerType, setTimerType } = useContext(TimerContext);
+  const [timerRounds, setTimerRounds] = useState(timers.length);
+
+  const nextInQueue = () => {
+    setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
+    let currentIndex = timers.length - timerRounds;
+    setTimers((prevTimers) => [
+      (prevTimers[currentIndex] = {
+        id: currentIndex,
+        timerType: timers[currentIndex].timerType,
+        time: timers[currentIndex].time,
+        rounds: timers[currentIndex].rounds,
+        rest: timers[currentIndex].rest,
+        status: STATUS.completed,
+      }),
+      (prevTimers[currentIndex + 1] = {
+        id: currentIndex + 1,
+        timerType: timers[currentIndex + 1].timerType,
+        time: timers[currentIndex + 1].time,
+        rounds: timers[currentIndex + 1].rounds,
+        rest: timers[currentIndex + 1].rest,
+        status: STATUS.running,
+      }),
+      ...prevTimers.slice(2),
+    ]);
+    setTimerType(timers[currentIndex].timerType);
+    setTime(0);
+    setIsRunning(true);
+    setBtnState(false);
+  };
 
   // Code inspired by the article Nico shared (reference in readme)
   useInterval(
     () => {
-      //stopwatch
       if (timerType === TIMERS.stopwatch) {
+        //stopwatch
         setTime(Number(time) + 1);
         if (Number(time) === Number(savedTime) - 1) {
           setIsRunning(false);
           setBtnState(true);
           setShowMessage(true);
           setMessage(MESSAGES.finished);
+          console.log(timerRounds);
+          if (timerRounds > 1) {
+            nextInQueue();
+          }
         }
       }
       //countdown

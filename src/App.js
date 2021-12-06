@@ -9,9 +9,48 @@ import AddView from "./views/AddView";
 // import { TIMERS } from "./utils/helpers";
 
 const Container = styled.div`
-  background: #f0f6fb;
+  background: rgb(63, 162, 224);
+  background: linear-gradient(
+    118deg,
+    rgba(63, 162, 224, 0.7203256302521008) 0%,
+    rgba(49, 110, 148, 0.639093137254902) 35%,
+    rgba(224, 187, 52, 0.577468487394958) 68%,
+    rgba(78, 19, 148, 0.5802696078431373) 96%
+  );
   height: 100vh;
   overflow: auto;
+`;
+const Navigation = styled.nav`
+  margin-bottom: 5rem;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover:not(.active) {
+    background-color: #ddd;
+  }
+
+  li a.active {
+    color: white;
+    background-color: #04aa6d;
+  }
 `;
 
 // Clichandler for setting a variable, that helps avoid problems when clicking on components in the docs view
@@ -38,7 +77,7 @@ const App = () => {
   return (
     <Container>
       <Router>
-        <nav>
+        <Navigation>
           <ul>
             <li id="timers" onClick={handleClick}>
               <Link to="/">Timers</Link>
@@ -50,7 +89,7 @@ const App = () => {
               <Link to="/add">Add</Link>
             </li>
           </ul>
-        </nav>
+        </Navigation>
         <Switch>
           <Route path="/add">
             <AddView />

@@ -3,9 +3,8 @@ import styled from "styled-components";
 import Timer from "../components/generic/Timer";
 import Navbar from "../components/generic/Navbar";
 import TimerQueue from "../components/generic/TimerQueue";
-import { COLORS, TIMERS } from "../utils/helpers";
-
-// import Intro from "../components/generic/Intro";
+// import { COLORS, TIMERS } from "../utils/helpers";
+import { QueueStyle } from "../utils/css.js";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -20,26 +19,7 @@ const Container = styled.div`
 const Timers = styled.div``;
 
 const Queue = styled.div`
-  width: 20rem;
-  flex-direction: column;
-  align-self: flex-start;
-
-  .${TIMERS.stopwatch} {
-    background-color: ${COLORS.stopwatch};
-  }
-  .${TIMERS.countdown} {
-    background-color: ${COLORS.countdown};
-  }
-  .${TIMERS.xy} {
-    background-color: ${COLORS.xy};
-  }
-  .${TIMERS.tabata} {
-    background-color: ${COLORS.tabata};
-  }
-  .empty {
-    background-color: gray;
-    opacity: 0.5;
-  }
+.${QueueStyle}
 `;
 // Using the react router to create navigation
 const App = () => {
