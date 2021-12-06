@@ -12,7 +12,7 @@ export const useTimer = () => {
   const { currentRound, setCurrentRound } = useContext(TimerContext);
   const { savedTime } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
-  const { rest, setRest } = useContext(TimerContext);
+  const { rest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
   const { timerType, setTimerType } = useContext(TimerContext);
   const [timerRounds, setTimerRounds] = useState(timers.length);

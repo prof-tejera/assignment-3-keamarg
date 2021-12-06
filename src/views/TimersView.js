@@ -5,7 +5,7 @@ import Navbar from "../components/generic/Navbar";
 import TimerQueue from "../components/generic/TimerQueue";
 import { QueueStyle } from "../utils/css.js";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
