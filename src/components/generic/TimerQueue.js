@@ -22,7 +22,7 @@ const Item = styled.div`
 
 const TimerQueue = () => {
   const { timers, setTimers } = useContext(TimerContext);
-  const { intro, setIntro } = useContext(TimerContext);
+  const { setIntro } = useContext(TimerContext);
   const [totalTime, setTotalTime] = useState(0);
 
   const removeItem = (id) => {

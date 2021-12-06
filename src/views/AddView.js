@@ -107,16 +107,22 @@ const Add = () => {
           <div className="text-center">
             <Settings></Settings>
           </div>
-          {time > 0 && timerType !== TIMERS.tabata ? (
+          {time > 0 && timerType !== TIMERS.tabata && timers.length < 8 ? (
             <Button
               styleName="readyBtn"
               value={BTNTYPE.add}
               onClick={handleClick}
             ></Button>
-          ) : time > 0 && rest > 0 ? (
+          ) : time > 0 && rest > 0 && timers.length < 8 ? (
             <Button
               styleName="readyBtn"
               value={BTNTYPE.add}
+              onClick={handleClick}
+            ></Button>
+          ) : timers.length > 7 ? (
+            <Button
+              styleName="readyBtn"
+              value={BTNTYPE.queue}
               onClick={handleClick}
             ></Button>
           ) : (
