@@ -31,6 +31,7 @@ export const BUTTONS = {
   add: "bi bi-plus-circle",
   arrowUp: "bi bi-arrow-up-circle-fill",
   queue: "bi bi-stack",
+  limit: "bi bi-x-circle",
 };
 
 export const BTNTYPE = {
@@ -45,6 +46,7 @@ export const BTNTYPE = {
   add: "add",
   arrowUp: "arrowUp",
   queue: "queue",
+  limit: "limit",
 };
 
 export const TIMERS = {
@@ -53,12 +55,6 @@ export const TIMERS = {
   xy: "XY",
   tabata: "Tabata",
 };
-
-// export const INPUTS = {
-//   timer: "timer",
-//   rounds: "rounds",
-//   rest: "rest",
-// };
 
 export const MESSAGES = {
   finished: "Well done!",
@@ -76,7 +72,7 @@ export const MESSAGES = {
 export const STATUS = {
   completed: "completed",
   running: "running",
-  notRunning: "not running",
+  notRunning: "notRunning",
 };
 
 // Function for converting the seconds to a more human friendly format

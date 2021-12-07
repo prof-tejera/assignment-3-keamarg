@@ -21,6 +21,15 @@ export const ReadyBtn = css`
   animation: PulseAnim2 1s ease forwards;
 `;
 
+export const QueueBtn = css`
+  z-index: 1;
+  font-size: 2rem;
+  bottom: 1rem;
+  //   margin: 0 auto;
+  background-color: transparent;
+  animation: PulseAnim3 1s ease forwards;
+`;
+
 export const NotReadyBtn = css`
   z-index: 1;
   font-size: 3rem;
@@ -68,6 +77,21 @@ export const PulseAnim2 = css`
     }
     50% {
       transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+      color: ${COLORS.text};
+    }
+  }
+`;
+
+export const PulseAnim3 = css`
+  @keyframes PulseAnim3 {
+    0% {
+      color: ${COLORS.text};
+    }
+    50% {
+      transform: scale(1.02);
     }
     100% {
       transform: scale(1);

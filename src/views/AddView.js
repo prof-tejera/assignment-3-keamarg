@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { BTNTYPE, COLORS, TIMERS, STATUS } from "../utils/helpers";
 import Settings from "../components/generic/Settings";
@@ -6,7 +6,15 @@ import Panel from "../components/generic/Panel";
 import TimerQueue from "../components/generic/TimerQueue";
 import { TimerContext } from "../TimerProvider";
 import Button from "../components/generic/Button";
-import { ReadyBtn, NotReadyBtn, PulseAnim2, QueueStyle } from "../utils/css.js";
+import {
+  ReadyBtn,
+  NotReadyBtn,
+  QueueBtn,
+  PulseAnim2,
+  PulseAnim3,
+  QueueStyle,
+} from "../utils/css.js";
+import { useHistory } from "react-router";
 
 const Container = styled.div`
   display: flex;
@@ -22,16 +30,19 @@ const Queue = styled.div`
 
 const AddPanel = styled.div`
   position: relative;
-  height: 25rem;
+  height: 27.5rem;
   font-size: 0.8rem;
   .readyBtn {
     ${ReadyBtn}
   }
-  ${PulseAnim2}
-
   .notReadyBtn {
     ${NotReadyBtn}
   }
+  .queueBtn {
+    ${QueueBtn}
+  }
+  ${PulseAnim2}
+  ${PulseAnim3}
 `;
 
 const Text = styled.h1`
@@ -51,6 +62,8 @@ const Add = () => {
   const { rounds } = useContext(TimerContext);
   const { rest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
+  const limit = 9;
+  const history = useHistory();
 
   const handleChange = (e) => {
     switch (e.target.value) {
@@ -74,15 +87,22 @@ const Add = () => {
     }
   };
 
-  const handleClick = (e) => {
+  const handleAddClick = () => {
     const id = timers.length;
-    if (timers.length < 8) {
+    if (timers.length < limit) {
       setTimers(() => [
         ...timers,
         { id, timerType, time, rounds, rest, status: STATUS.notRunning },
       ]);
-      localStorage.setItem("timerQueue", JSON.stringify(timers));
     }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("timerQueue", JSON.stringify(timers));
+  }, [timers]);
+
+  const handleQueueClick = () => {
+    history.push(`/`);
   };
 
   return (
@@ -107,23 +127,23 @@ const Add = () => {
           <div className="text-center">
             <Settings></Settings>
           </div>
-          {time > 0 && timerType !== TIMERS.tabata && timers.length < 8 ? (
+          {time > 0 && timerType !== TIMERS.tabata && timers.length < limit ? (
             <Button
               styleName="readyBtn"
               value={BTNTYPE.add}
-              onClick={handleClick}
+              onClick={handleAddClick}
             ></Button>
-          ) : time > 0 && rest > 0 && timers.length < 8 ? (
+          ) : time > 0 && rest > 0 && timers.length < limit ? (
             <Button
               styleName="readyBtn"
               value={BTNTYPE.add}
-              onClick={handleClick}
+              onClick={handleAddClick}
             ></Button>
-          ) : timers.length > 7 ? (
+          ) : timers.length > limit - 1 ? (
             <Button
-              styleName="readyBtn"
-              value={BTNTYPE.queue}
-              onClick={handleClick}
+              styleName="notReadyBtn"
+              value={BTNTYPE.limit}
+              disabled={true}
             ></Button>
           ) : (
             <Button
@@ -132,7 +152,14 @@ const Add = () => {
               disabled={true}
             ></Button>
           )}
-          {timers.length > 7 ? <Text>Limit reached</Text> : null}
+          {timers.length > 0 ? (
+            <Button
+              styleName="queueBtn"
+              value={BTNTYPE.queue}
+              onClick={handleQueueClick}
+              inner={"Go to timer queue "}
+            ></Button>
+          ) : null}
         </AddPanel>
       </Panel>
     </Container>

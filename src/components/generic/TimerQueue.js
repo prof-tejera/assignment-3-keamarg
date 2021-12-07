@@ -1,16 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TimerContext } from "../../TimerProvider";
 import styled from "styled-components";
-import { COLORS, timerValue, BTNTYPE } from "../../utils/helpers";
+import { COLORS, timerValue, BTNTYPE, STATUS } from "../../utils/helpers";
 import Button from "../generic/Button";
 
 const Title = styled.h1`
   color: ${COLORS.text};
-  font-size: 2rem;
+  font-size: 1.8rem;
 `;
 
 const Queue = styled.div`
   width: 19rem;
+  .running {
+    background-color: green;
+  }
+  .notRunning {
+    background-color: red;
+  }
+  .completed {
+    background-color: gold;
+  }
 `;
 const Item = styled.div`
   color: ${COLORS.text};
@@ -42,6 +51,9 @@ const TimerQueue = () => {
     } else {
       setTotalTime(0);
     }
+    // if (timers[0] !== undefined && STATUS.running) {
+    //   console.log("Timers from TimerQueue: " + timers[0].time);
+    // }
   }, [timers]);
 
   const clickHandler = () => {
@@ -58,20 +70,22 @@ const TimerQueue = () => {
             id={item.id}
             key={key}
             onClick={() => removeItem(item.id)}
-            className={item.timerType}
+            className={`${item.timerType} ${item.status}`}
           >
-            {key + 1} {item.timerType}, Status: {item.status}
+            {key + 1} {item.timerType}, Status: {item.status}, id: {item.id}
           </Item>
         ))
       ) : (
         <Item className="empty">
           <span>Queue empty...</span>
-          <Button
-            onClick={clickHandler}
-            inner="Load last? "
-            value={BTNTYPE.queue}
-            styleName="loadBtn"
-          ></Button>
+          {localStorage.getItem("timerQueue") !== "[]" ? (
+            <Button
+              onClick={clickHandler}
+              inner="Load last? "
+              value={BTNTYPE.queue}
+              styleName="loadBtn"
+            ></Button>
+          ) : null}
         </Item>
       )}
     </Queue>

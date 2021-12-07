@@ -27,7 +27,7 @@ const Choice2 = styled.div`
 `;
 const UpperPanel = styled.div`
   padding-top: 1rem;
-  height: 22.5rem;
+  height: 25rem;
   text-align: center;
   ${FadeIn};
   ${Bounce};
@@ -55,25 +55,25 @@ const Intro = () => {
 
   const history = useHistory();
 
-  const updateQueue = () => {
-    setTimers((prevTimers) => [
-      (prevTimers[0] = {
-        id: 0,
-        timerType: timers[0].timerType,
-        time: timers[0].time,
-        rounds: timers[0].rounds,
-        rest: timers[0].rest,
-        status: STATUS.running,
-      }),
-      ...prevTimers.slice(1),
-    ]);
-  };
+  // const updateQueue = () => {
+  //   setTimers((prevTimers) => [
+  //     (prevTimers[0] = {
+  //       id: 0,
+  //       timerType: timers[0].timerType,
+  //       time: timers[0].time,
+  //       rounds: timers[0].rounds,
+  //       rest: timers[0].rest,
+  //       status: STATUS.running,
+  //     }),
+  //     ...prevTimers.slice(1),
+  //   ]);
+  // };
 
   const handleNavClick = () => {
     //I think this should be put in helpers and used in the useInterval hook as well
     if (timers.length > 0) {
       setTime(timers[0].time);
-      updateQueue();
+      // updateQueue();
       setSavedTime(timers[0].time);
       setIntro(false);
       setSettingsState(false);
@@ -83,7 +83,7 @@ const Intro = () => {
         case TIMERS.stopwatch:
           setTime(0);
           history.push(`/stopwatch`);
-          setTimerType(TIMERS.countdown);
+          setTimerType(TIMERS.stopwatch);
           break;
 
         case TIMERS.countdown:

@@ -40,6 +40,9 @@ const TimerProvider = ({ children }) => {
       ? localStorage.getItem("timerType")
       : "Stopwatch"
   );
+  // const [savedQueue, setSavedQueue] = useState(
+  //   localStorage.getItem("timerQueue") ? localStorage.getItem("timerQueue") : ""
+  // );
   const [intro, setIntro] = useState(true);
   const [activeTimer, setActiveTimer] = useState(true);
 
@@ -68,6 +71,8 @@ const TimerProvider = ({ children }) => {
   return (
     <TimerContext.Provider
       value={{
+        // savedQueue,
+        // setSavedQueue,
         activeTimer,
         setActiveTimer,
         timers,
