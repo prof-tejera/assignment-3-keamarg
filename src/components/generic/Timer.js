@@ -21,8 +21,10 @@ import {
   TIMERS,
   MESSAGES,
   timerValue,
+  STATUS,
 } from "../../utils/helpers";
 import { useTimer } from "../../utils/hooks";
+import { useHistory } from "react-router";
 
 const Title = styled.h1`
   color: ${COLORS.text};
@@ -109,7 +111,13 @@ const Timer = (props) => {
   const { currentRest, setCurrentRest } = useContext(TimerContext);
   const { timerType, setTimerType } = useContext(TimerContext);
   const { rest } = useContext(TimerContext);
-  const { intro } = useContext(TimerContext);
+  const { intro, setIntro } = useContext(TimerContext);
+  const { inQueue } = useContext(TimerContext);
+  const { setTimers } = useContext(TimerContext);
+  const { timerRounds, setTimerRounds } = useContext(TimerContext);
+  const { timers } = useContext(TimerContext);
+
+  const history = useHistory();
 
   //make sure the timer is set correctly when entering direct URL
   useEffect(() => {
@@ -146,6 +154,11 @@ const Timer = (props) => {
   //Reset button
   const handleClickReset = (e) => {
     if (!docs) {
+      if (inQueue) {
+        setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+        setIntro(true);
+        history.push(`/`);
+      }
       if (timerType === TIMERS.stopwatch) {
         setTime(0);
       } else {
@@ -163,20 +176,46 @@ const Timer = (props) => {
   const handleClickForward = () => {
     if (!docs) {
       const t = Number(time);
-      if (timerType === TIMERS.stopwatch) {
-        setTime(savedTime);
-        setMessage(MESSAGES.finished);
-        setShowMessage(true);
-      }
-      if (t && timerType !== TIMERS.stopwatch) {
+      if (inQueue && timerRounds > 0) {
+        setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
+        let currentIndex = timers.length - timerRounds;
+        setTimers((prevTimers) =>
+          prevTimers.map((item) => {
+            var temp = Object.assign({}, item);
+            if (temp.id === currentIndex) {
+              temp.status = STATUS.completed;
+            }
+            if (temp.id === currentIndex + 1) {
+              temp.status = STATUS.running;
+            }
+            return temp;
+          })
+        );
+        if (timerRounds === 1) {
+          setIntro(true);
+          history.push(`/`);
+          setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+        }
+        setTimerType(timers[currentIndex].timerType);
         setTime(0);
-        setMessage(MESSAGES.finished);
-        setShowMessage(true);
-        setCurrentRest(false);
+        setIsRunning(true);
+        setBtnState(false);
+      } else {
+        if (timerType === TIMERS.stopwatch) {
+          setTime(savedTime);
+          setMessage(MESSAGES.finished);
+          setShowMessage(true);
+        }
+        if (t && timerType !== TIMERS.stopwatch) {
+          setTime(0);
+          setMessage(MESSAGES.finished);
+          setShowMessage(true);
+          setCurrentRest(false);
+        }
+        setCurrentRound(0);
+        setIsRunning(false);
+        setBtnState(true);
       }
-      setCurrentRound(0);
-      setIsRunning(false);
-      setBtnState(true);
     }
   };
 

@@ -62,6 +62,8 @@ const Add = () => {
   const { rounds } = useContext(TimerContext);
   const { rest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
+  // const { inQueue, setInQueue } = useContext(TimerContext);
+
   const limit = 9;
   const history = useHistory();
 
@@ -102,6 +104,7 @@ const Add = () => {
   }, [timers]);
 
   const handleQueueClick = () => {
+    // setInQueue(true);
     history.push(`/`);
   };
 

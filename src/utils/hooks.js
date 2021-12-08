@@ -1,6 +1,7 @@
 import { useContext, useRef, useEffect, useState } from "react";
 import { TimerContext } from "../TimerProvider";
 import { TIMERS, getMessage, MESSAGES, STATUS } from "./helpers";
+import { useHistory } from "react-router";
 
 export const useTimer = () => {
   const [delay] = useState(1000);
@@ -15,70 +16,12 @@ export const useTimer = () => {
   const { rest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
   const { timerType, setTimerType } = useContext(TimerContext);
-  const [timerRounds, setTimerRounds] = useState(timers.length);
-  const [count, setCount] = useState(0);
+  const { timerRounds, setTimerRounds } = useContext(TimerContext);
+  const { intro, setIntro } = useContext(TimerContext);
+  const { outro, setOutro } = useContext(TimerContext);
+  const history = useHistory();
 
-  const nextInQueue = () => {
-    // setCount((prevCount) => prevCount + 1);
-    // console.log(count);
-
-    setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
-    let currentIndex = timers.length - timerRounds;
-
-    setTimers((prevTimers) =>
-      prevTimers.map((item) => {
-        var temp = Object.assign({}, item);
-        if (temp.id === currentIndex) {
-          temp.status = STATUS.completed;
-        }
-        if (temp.id === currentIndex + 1) {
-          temp.status = STATUS.running;
-        }
-        return temp;
-      })
-    );
-
-    // console.log(timerRounds);
-    // console.log("curr: " + currentIndex);
-    // console.log("timerRounds: " + timerRounds);
-
-    // setTimers((prevTimers) => [
-    //   ...prevTimers,
-    //   { ...prevTimers[count], status: "running" },
-    // ]);
-
-    // setTimers((prevTimers) => [
-    //   (prevTimers[currentIndex] = {
-    //     id: currentIndex,
-    //     timerType: timers[currentIndex].timerType,
-    //     time: timers[currentIndex].time,
-    //     rounds: timers[currentIndex].rounds,
-    //     rest: timers[currentIndex].rest,
-    //     status: STATUS.completed,
-    //   }),
-    //   (prevTimers[currentIndex + 1] = {
-    //     id: currentIndex + 1,
-    //     timerType: timers[currentIndex + 1].timerType,
-    //     time: timers[currentIndex + 1].time,
-    //     rounds: timers[currentIndex + 1].rounds,
-    //     rest: timers[currentIndex + 1].rest,
-    //     status: STATUS.running,
-    //   }),
-    //   // ...prevTimers.slice(2),
-    // ]);
-
-    // setTimers((prevTimers) => prevTimers[count]);
-    setTimerType(timers[currentIndex].timerType);
-    setTime(0);
-    setIsRunning(true);
-    setBtnState(false);
-  };
-
-  // useEffect(() => {
-  //   console.log(timers);
-  // }, [timers]);
-
-  // Code inspired by the article Nico shared (reference in readme)
+  // Hook for controlling all timers
   useInterval(
     () => {
       if (timerType === TIMERS.stopwatch) {
@@ -92,7 +35,7 @@ export const useTimer = () => {
           console.log(timers);
           if (timerRounds > 1) {
             nextInQueue();
-          } else if (timers[0]) {
+          } else if (timers[0] && !intro) {
             setTimers((prevTimers) => [
               ...prevTimers.slice(0, -1),
               {
@@ -100,9 +43,12 @@ export const useTimer = () => {
                 status: STATUS.completed,
               },
             ]);
+            setShowMessage(false);
+            setOutro(true);
+            setIntro(true);
+            history.push(`/`);
+            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
           }
-          // setCount((prevCount) => prevCount + 1);
-          // console.log(count);
         }
       }
       //countdown
@@ -192,4 +138,27 @@ export const useTimer = () => {
       }
     }, [delay]);
   }
+
+  const nextInQueue = () => {
+    setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
+    let currentIndex = timers.length - timerRounds;
+
+    setTimers((prevTimers) =>
+      prevTimers.map((item, index) => {
+        let obj = Object.assign({}, item);
+        console.log(index);
+        if (index === currentIndex) {
+          obj.status = STATUS.completed;
+        }
+        if (index === currentIndex + 1) {
+          obj.status = STATUS.running;
+        }
+        return obj;
+      })
+    );
+    setTimerType(timers[currentIndex].timerType);
+    setTime(0);
+    setIsRunning(true);
+    setBtnState(false);
+  };
 };

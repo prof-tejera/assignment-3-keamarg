@@ -86,10 +86,12 @@ const Navbar = () => {
   const { setTimerType } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
   const { setTimers } = useContext(TimerContext);
+  const { setInQueue } = useContext(TimerContext);
 
   // Click handler for the navbar
   const handleClick = (e) => {
     if (!docs) {
+      setInQueue(false);
       setTime(0);
       setTimers([]);
       setShowTimerRounds();

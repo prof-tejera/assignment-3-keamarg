@@ -44,7 +44,9 @@ const TimerProvider = ({ children }) => {
   //   localStorage.getItem("timerQueue") ? localStorage.getItem("timerQueue") : ""
   // );
   const [intro, setIntro] = useState(true);
-  const [activeTimer, setActiveTimer] = useState(true);
+  const [outro, setOutro] = useState(false);
+  // const [activeTimer, setActiveTimer] = useState(true);
+  const [inQueue, setInQueue] = useState(false);
 
   //States for assignment 3 (would it be better to split into separate providers? And if so, why?)
 
@@ -67,14 +69,21 @@ const TimerProvider = ({ children }) => {
     //   status: STATUS.notRunning,
     // },
   ]);
+  const [timerRounds, setTimerRounds] = useState(0);
 
   return (
     <TimerContext.Provider
       value={{
+        outro,
+        setOutro,
+        timerRounds,
+        setTimerRounds,
+        inQueue,
+        setInQueue,
         // savedQueue,
         // setSavedQueue,
-        activeTimer,
-        setActiveTimer,
+        // activeTimer,
+        // setActiveTimer,
         timers,
         setTimers,
         intro,

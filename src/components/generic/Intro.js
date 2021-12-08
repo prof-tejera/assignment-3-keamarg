@@ -4,7 +4,14 @@ import Panel from "../generic/Panel";
 import Button from "../generic/Button";
 import styled from "styled-components";
 import { FadeIn, Bounce, ReadyBtn, PulseAnim2 } from "../../utils/css";
-import { BUTTONS, BTNTYPE, COLORS, TIMERS, STATUS } from "../../utils/helpers";
+import {
+  BUTTONS,
+  BTNTYPE,
+  COLORS,
+  TIMERS,
+  STATUS,
+  MESSAGES,
+} from "../../utils/helpers";
 import { useHistory } from "react-router-dom";
 
 const Text = styled.h1`
@@ -32,6 +39,10 @@ const UpperPanel = styled.div`
   ${FadeIn};
   ${Bounce};
   ${PulseAnim2}
+  .readyBtn {
+    color: ${COLORS.text};
+    ${ReadyBtn}
+  }
 `;
 
 const Arrow = styled.i`
@@ -52,10 +63,13 @@ const Intro = () => {
   const { setRounds } = useContext(TimerContext);
   const { setRest } = useContext(TimerContext);
   const { setCurrentRound } = useContext(TimerContext);
+  const { setInQueue } = useContext(TimerContext);
+  const { setTimerRounds } = useContext(TimerContext);
+  const { outro, setOutro } = useContext(TimerContext);
 
   const history = useHistory();
 
-  // const updateQueue = () => {
+  // const setFirstQueue = () => {
   //   setTimers((prevTimers) => [
   //     (prevTimers[0] = {
   //       id: 0,
@@ -69,11 +83,21 @@ const Intro = () => {
   //   ]);
   // };
 
-  const handleNavClick = () => {
+  const setFirstQueue = () => {
+    setTimers((prevTimers) => [
+      { ...prevTimers[0], status: STATUS.running },
+      ...prevTimers.slice(1),
+    ]);
+  };
+
+  const handleStartClick = () => {
     //I think this should be put in helpers and used in the useInterval hook as well
+    localStorage.setItem("timerQueue", JSON.stringify(timers));
     if (timers.length > 0) {
+      setTimerRounds(timers.length);
+      setInQueue(true);
       setTime(timers[0].time);
-      // updateQueue();
+      setFirstQueue();
       setSavedTime(timers[0].time);
       setIntro(false);
       setSettingsState(false);
@@ -118,31 +142,45 @@ const Intro = () => {
   return (
     <Panel timerType={timerType}>
       <UpperPanel>
-        <Choice1>
-          <Arrow className={BUTTONS.arrowUp}></Arrow>
-          <Text>Choose a timer</Text>
-        </Choice1>
-        <Choice2>
-          {timers.length > 0 ? (
-            <span>
-              <Text>... or start the queue</Text>
-              <Button
-                styleName="readyBtn"
-                value={BTNTYPE.start}
-                onClick={handleNavClick}
-              ></Button>
-            </span>
-          ) : (
-            <span>
-              <Text>... or add to queue</Text>
-              <Button
-                styleName="readyBtn"
-                value={BTNTYPE.add}
-                onClick={handleAddClick}
-              ></Button>
-            </span>
-          )}
-        </Choice2>
+        {outro ? (
+          <span>
+            <Text>{MESSAGES.finished}</Text>
+            <Text>Another round?</Text>
+            <Button
+              styleName="readyBtn"
+              value={BTNTYPE.start}
+              onClick={handleStartClick}
+            ></Button>
+          </span>
+        ) : (
+          <div>
+            <Choice1>
+              <Arrow className={BUTTONS.arrowUp}></Arrow>
+              <Text>Choose a timer</Text>
+            </Choice1>
+            <Choice2>
+              {timers.length > 0 ? (
+                <span>
+                  <Text>... or start the queue</Text>
+                  <Button
+                    styleName="readyBtn"
+                    value={BTNTYPE.start}
+                    onClick={handleStartClick}
+                  ></Button>
+                </span>
+              ) : (
+                <span>
+                  <Text>... or add to queue</Text>
+                  <Button
+                    styleName="readyBtn"
+                    value={BTNTYPE.add}
+                    onClick={handleAddClick}
+                  ></Button>
+                </span>
+              )}
+            </Choice2>
+          </div>
+        )}
       </UpperPanel>
     </Panel>
   );

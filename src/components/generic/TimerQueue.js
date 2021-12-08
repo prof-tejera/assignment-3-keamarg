@@ -3,6 +3,7 @@ import { TimerContext } from "../../TimerProvider";
 import styled from "styled-components";
 import { COLORS, timerValue, BTNTYPE, STATUS } from "../../utils/helpers";
 import Button from "../generic/Button";
+import { useHistory } from "react-router";
 
 const Title = styled.h1`
   color: ${COLORS.text};
@@ -33,6 +34,7 @@ const TimerQueue = () => {
   const { timers, setTimers } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
   const [totalTime, setTotalTime] = useState(0);
+  const history = useHistory();
 
   const removeItem = (id) => {
     const newList = timers.filter((item) => item.id !== id);
@@ -56,9 +58,12 @@ const TimerQueue = () => {
     // }
   }, [timers]);
 
+  useEffect(() => {}, [timers]);
+
   const clickHandler = () => {
     setTimers(JSON.parse(localStorage.getItem("timerQueue")));
     setIntro(true);
+    history.push(`/`);
   };
 
   return (
@@ -67,12 +72,12 @@ const TimerQueue = () => {
       {timers.length > 0 ? (
         timers.map((item, key) => (
           <Item
-            id={item.id}
+            id={key + 1}
             key={key}
             onClick={() => removeItem(item.id)}
             className={`${item.timerType} ${item.status}`}
           >
-            {key + 1} {item.timerType}, Status: {item.status}, id: {item.id}
+            {key + 1} {item.timerType}, Status: {item.status}
           </Item>
         ))
       ) : (
