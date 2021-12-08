@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TimerContext } from "../../TimerProvider";
 import styled from "styled-components";
-import { COLORS, timerValue, BTNTYPE, STATUS } from "../../utils/helpers";
+import { COLORS, timerValue, BTNTYPE } from "../../utils/helpers";
 import Button from "../generic/Button";
 import { useHistory } from "react-router";
 
@@ -12,15 +12,7 @@ const Title = styled.h1`
 
 const Queue = styled.div`
   width: 19rem;
-  .running {
-    background-color: green;
-  }
-  .notRunning {
-    background-color: red;
-  }
-  .completed {
-    background-color: gold;
-  }
+  // visibility: hidden;
 `;
 const Item = styled.div`
   color: ${COLORS.text};
@@ -32,7 +24,9 @@ const Item = styled.div`
 
 const TimerQueue = () => {
   const { timers, setTimers } = useContext(TimerContext);
-  const { setIntro } = useContext(TimerContext);
+  const { setOutro } = useContext(TimerContext);
+  const { isRunning } = useContext(TimerContext);
+
   const [totalTime, setTotalTime] = useState(0);
   const history = useHistory();
 
@@ -62,11 +56,12 @@ const TimerQueue = () => {
 
   const clickHandler = () => {
     setTimers(JSON.parse(localStorage.getItem("timerQueue")));
-    setIntro(true);
+    setOutro(true);
     history.push(`/`);
   };
 
   return (
+    // <Queue style={!timers[0] ? { visibility: "hidden" } : null}>
     <Queue>
       <Title>Queue ({timerValue(totalTime)})</Title>
       {timers.length > 0 ? (
@@ -74,10 +69,10 @@ const TimerQueue = () => {
           <Item
             id={key + 1}
             key={key}
-            onClick={() => removeItem(item.id)}
+            onClick={isRunning ? null : () => removeItem(item.id)}
             className={`${item.timerType} ${item.status}`}
           >
-            {key + 1} {item.timerType}, Status: {item.status}
+            {key + 1} {item.timerType}, Status: {item.status} Time: {item.time}
           </Item>
         ))
       ) : (

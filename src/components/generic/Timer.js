@@ -14,7 +14,7 @@ import Panel from "../generic/Panel";
 import Settings from "../generic/Settings";
 import Button from "../generic/Button";
 import DisplayTime from "../generic/DisplayTime";
-import Intro from "../generic/Intro";
+import IntroOutro from "./IntroOutro";
 import {
   BTNTYPE,
   COLORS,
@@ -116,6 +116,7 @@ const Timer = (props) => {
   const { setTimers } = useContext(TimerContext);
   const { timerRounds, setTimerRounds } = useContext(TimerContext);
   const { timers } = useContext(TimerContext);
+  const { outro, setOutro } = useContext(TimerContext);
 
   const history = useHistory();
 
@@ -125,6 +126,16 @@ const Timer = (props) => {
       setTimerType(props.match.path.slice(1));
     }
   }, [setTimerType, props.match.path]);
+
+  const refreshTimers = () => {
+    setTimers((prevTimers) =>
+      prevTimers.map((item) => {
+        let obj = Object.assign({}, item);
+        obj.status = STATUS.notRunning;
+        return obj;
+      })
+    );
+  };
 
   // Click handler for all buttons (refactored to seperate handlers)
 
@@ -152,10 +163,11 @@ const Timer = (props) => {
   };
 
   //Reset button
-  const handleClickReset = (e) => {
+  const handleClickReset = () => {
     if (!docs) {
       if (inQueue) {
-        setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+        refreshTimers();
+        localStorage.setItem("timerQueue", JSON.stringify(timers));
         setIntro(true);
         history.push(`/`);
       }
@@ -192,9 +204,9 @@ const Timer = (props) => {
           })
         );
         if (timerRounds === 1) {
-          setIntro(true);
+          setOutro(true);
           history.push(`/`);
-          setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+          // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
         }
         setTimerType(timers[currentIndex].timerType);
         setTime(0);
@@ -267,8 +279,8 @@ const Timer = (props) => {
   useTimer(timerType);
 
   // Base strucure for all timers
-  if (intro) {
-    return <Intro></Intro>;
+  if (intro || outro) {
+    return <IntroOutro></IntroOutro>;
   } else if (!settingsState) {
     return (
       <Panel timerType={timerType}>

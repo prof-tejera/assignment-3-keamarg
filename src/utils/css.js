@@ -23,7 +23,7 @@ export const ReadyBtn = css`
 
 export const QueueBtn = css`
   z-index: 1;
-  font-size: 2rem;
+  font-size: 1.5rem;
   bottom: 1rem;
   //   margin: 0 auto;
   background-color: transparent;
@@ -182,5 +182,13 @@ export const QueueStyle = css`
     text-align: right;
     float: right;
     color: rgba(255, 0, 0, 0.8);
+  }
+  .running {
+    color: green;
+  }
+  .notRunning {
+  }
+  .completed {
+    color: gold;
   }
 `;

@@ -62,7 +62,8 @@ const Add = () => {
   const { rounds } = useContext(TimerContext);
   const { rest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
-  // const { inQueue, setInQueue } = useContext(TimerContext);
+  const { setInQueue } = useContext(TimerContext);
+  const { setIntro } = useContext(TimerContext);
 
   const limit = 9;
   const history = useHistory();
@@ -97,6 +98,7 @@ const Add = () => {
         { id, timerType, time, rounds, rest, status: STATUS.notRunning },
       ]);
     }
+    console.log(timers);
   };
 
   useEffect(() => {
@@ -104,7 +106,8 @@ const Add = () => {
   }, [timers]);
 
   const handleQueueClick = () => {
-    // setInQueue(true);
+    setInQueue(true);
+    setIntro(true);
     history.push(`/`);
   };
 
@@ -160,7 +163,7 @@ const Add = () => {
               styleName="queueBtn"
               value={BTNTYPE.queue}
               onClick={handleQueueClick}
-              inner={"Go to timer queue "}
+              inner={"Go to timers and queue "}
             ></Button>
           ) : null}
         </AddPanel>

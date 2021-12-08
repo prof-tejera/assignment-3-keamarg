@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { TimerContext } from "../../TimerProvider";
-import Panel from "../generic/Panel";
-import Button from "../generic/Button";
+import Panel from "./Panel";
+import Button from "./Button";
 import styled from "styled-components";
 import { FadeIn, Bounce, ReadyBtn, PulseAnim2 } from "../../utils/css";
 import {
@@ -51,7 +51,7 @@ const Arrow = styled.i`
   position: relative;
 `;
 
-const Intro = () => {
+const IntroOutro = () => {
   const { timerType, setTimerType } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
@@ -90,8 +90,19 @@ const Intro = () => {
     ]);
   };
 
+  const refreshTimers = () => {
+    setTimers((prevTimers) =>
+      prevTimers.map((item) => {
+        let obj = Object.assign({}, item);
+        obj.status = STATUS.notRunning;
+        return obj;
+      })
+    );
+  };
+
   const handleStartClick = () => {
     //I think this should be put in helpers and used in the useInterval hook as well
+    refreshTimers();
     localStorage.setItem("timerQueue", JSON.stringify(timers));
     if (timers.length > 0) {
       setTimerRounds(timers.length);
@@ -100,6 +111,7 @@ const Intro = () => {
       setFirstQueue();
       setSavedTime(timers[0].time);
       setIntro(false);
+      setOutro(false);
       setSettingsState(false);
       setBtnState(!btnState);
       setIsRunning(true);
@@ -185,4 +197,4 @@ const Intro = () => {
     </Panel>
   );
 };
-export default Intro;
+export default IntroOutro;
