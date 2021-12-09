@@ -17,7 +17,7 @@ const Queue = styled.div`
 const Item = styled.div`
   color: ${COLORS.text};
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0.45rem;
+  padding: 0.5rem;
   border-radius: 5px;
   margin-top: 0.15rem;
   font-size: 0.9rem;
@@ -34,19 +34,12 @@ const TimerQueue = () => {
   const removeItem = (id) => {
     console.log(timers);
     const newList = timers.filter((item) => item.id !== id);
-    // let newId = 0;
-    // newList.map((item) => {
-    //   var temp = Object.assign({}, item);
-    //   temp.id = newId;
-    //   return temp;
-    // });
     setTimers(newList);
-    // console.log(newList);
   };
 
-  //set the total time in que
+  //set the total time in queue
   useEffect(() => {
-    if (timers.length > 0) {
+    if (Array.isArray(timers) && timers.length > 0) {
       const time = timers.reduce((prevVal, currVal) => ({
         totalTime: prevVal.totalTime + currVal.totalTime,
       }));
@@ -57,24 +50,18 @@ const TimerQueue = () => {
     } else {
       setTotalTime(0);
     }
-    // if (timers[0] !== undefined && STATUS.running) {
-    //   console.log("Timers from TimerQueue: " + timers[0].time);
-    // }
   }, [timers]);
-
-  // useEffect(() => {}, [timers]);
 
   const clickHandler = () => {
     setTimers(JSON.parse(localStorage.getItem("timerQueue")));
     setOutro(true);
     history.push(`/`);
   };
-
   return (
     // <Queue style={!timers[0] ? { visibility: "hidden" } : null}>
     <Queue>
       <Title>Queue ({timerValue(totalTime)})</Title>
-      {timers.length > 0 ? (
+      {Array.isArray(timers) && timers.length > 0 ? (
         timers.map((item, key) => (
           <Item
             id={key + 1}
@@ -89,7 +76,8 @@ const TimerQueue = () => {
       ) : (
         <Item className="empty">
           <span>Queue empty...</span>
-          {localStorage.getItem("timerQueue") !== "[]" ? (
+          {localStorage.getItem("timerQueue") !== null &&
+          localStorage.getItem("timerQueue") !== "[]" ? (
             <Button
               onClick={clickHandler}
               inner="Load last? "

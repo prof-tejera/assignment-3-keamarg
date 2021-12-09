@@ -64,6 +64,7 @@ const Add = () => {
   const { timers, setTimers } = useContext(TimerContext);
   const { setInQueue } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
+  const { setOutro } = useContext(TimerContext);
 
   const limit = 9;
   const history = useHistory();
@@ -107,7 +108,6 @@ const Add = () => {
         },
       ]);
     }
-    console.log(timers);
   };
 
   useEffect(() => {
@@ -116,7 +116,8 @@ const Add = () => {
 
   const handleQueueClick = () => {
     setInQueue(true);
-    setIntro(true);
+    setIntro(false);
+    setOutro(true);
     history.push(`/`);
   };
   return (
@@ -147,13 +148,16 @@ const Add = () => {
               value={BTNTYPE.add}
               onClick={handleAddClick}
             ></Button>
-          ) : time > 0 && rest > 0 && timers.length < limit ? (
+          ) : Array.isArray(timers) &&
+            time > 0 &&
+            rest > 0 &&
+            timers.length < limit ? (
             <Button
               styleName="readyBtn"
               value={BTNTYPE.add}
               onClick={handleAddClick}
             ></Button>
-          ) : timers.length > limit - 1 ? (
+          ) : Array.isArray(timers) && timers.length > limit - 1 ? (
             <Button
               styleName="notReadyBtn"
               value={BTNTYPE.limit}
@@ -166,7 +170,7 @@ const Add = () => {
               disabled={true}
             ></Button>
           )}
-          {timers.length > 0 ? (
+          {Array.isArray(timers) && timers.length > 0 ? (
             <Button
               styleName="queueBtn"
               value={BTNTYPE.queue}

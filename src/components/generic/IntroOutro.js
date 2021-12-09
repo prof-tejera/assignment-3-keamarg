@@ -91,20 +91,22 @@ const IntroOutro = () => {
   };
 
   const refreshTimers = () => {
-    setTimers((prevTimers) =>
-      prevTimers.map((item) => {
-        let obj = Object.assign({}, item);
-        obj.status = STATUS.notRunning;
-        return obj;
-      })
-    );
+    if (Array.isArray(timers)) {
+      setTimers((prevTimers) =>
+        prevTimers.map((item) => {
+          let obj = Object.assign({}, item);
+          obj.status = STATUS.notRunning;
+          return obj;
+        })
+      );
+    }
   };
 
   const handleStartClick = () => {
     //I think this should be put in helpers and used in the useInterval hook as well
     refreshTimers();
     localStorage.setItem("timerQueue", JSON.stringify(timers));
-    if (timers.length > 0) {
+    if (Array.isArray(timers) && timers.length > 0) {
       setTimerRounds(timers.length);
       setInQueue(true);
       setTime(timers[0].time);
@@ -154,10 +156,16 @@ const IntroOutro = () => {
   return (
     <Panel timerType={timerType}>
       <UpperPanel>
-        {outro ? (
+        {Array.isArray(timers) && timers[0] && outro ? (
           <span>
-            <Text>{MESSAGES.finished}</Text>
-            <Text>Another round?</Text>
+            <Text>
+              {Array.isArray(timers) &&
+              timers.length > 0 &&
+              timers[timers.length - 1].status === STATUS.completed
+                ? MESSAGES.finished
+                : null}
+            </Text>
+            <Text>Start queue?</Text>
             <Button
               styleName="readyBtn"
               value={BTNTYPE.start}

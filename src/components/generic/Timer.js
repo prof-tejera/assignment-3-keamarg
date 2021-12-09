@@ -158,6 +158,15 @@ const Timer = (props) => {
           setIsRunning(true);
           setBtnState(false);
         }
+        if (inQueue) {
+          if (isRunning) {
+            setIsRunning(false);
+            setBtnState(true);
+          } else {
+            setIsRunning(true);
+            setBtnState(false);
+          }
+        }
       }
     }
   };
@@ -339,7 +348,6 @@ const Timer = (props) => {
           <div className="container">
             <div className="row col text-center">
               {showTimerRounds &&
-              // currentRound > 1 &&
               (timerType === TIMERS.xy || timerType === TIMERS.tabata) ? (
                 <Message>
                   {" "}
