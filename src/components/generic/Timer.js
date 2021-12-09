@@ -151,12 +151,13 @@ const Timer = (props) => {
           timerType === TIMERS.stopwatch &&
           Number(time) !== Number(savedTime)
         ) {
-          setIsRunning(!isRunning);
-          setBtnState(!btnState);
+          setIsRunning(true);
+          setBtnState(false);
         }
         if (timerType !== TIMERS.stopwatch && t) {
-          setIsRunning(!isRunning);
-          setBtnState(!btnState);
+          console.log("pingNot");
+          setIsRunning(true);
+          setBtnState(false);
         }
       }
     }
@@ -188,31 +189,52 @@ const Timer = (props) => {
   const handleClickForward = () => {
     if (!docs) {
       const t = Number(time);
+
+      //for "queue timer"
       if (inQueue && timerRounds > 0) {
         setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
         let currentIndex = timers.length - timerRounds;
+        // console.log("curentIndex from forward: " + currentIndex);
         setTimers((prevTimers) =>
-          prevTimers.map((item) => {
+          prevTimers.map((item, index) => {
             var temp = Object.assign({}, item);
-            if (temp.id === currentIndex) {
+            if (index === currentIndex) {
               temp.status = STATUS.completed;
             }
-            if (temp.id === currentIndex + 1) {
+            if (index === currentIndex + 1) {
               temp.status = STATUS.running;
             }
+            console.log(temp);
             return temp;
           })
         );
+        if (timers[currentIndex + 1]) {
+          setTimerType(timers[currentIndex + 1].timerType);
+          setSavedTime(timers[currentIndex + 1].time);
+          if (timers[currentIndex + 1].timerType === TIMERS.stopwatch) {
+            setTime(0);
+          } else {
+            setTime(timers[currentIndex + 1].time);
+          }
+        }
         if (timerRounds === 1) {
+          setTimers((prevTimers) => [
+            ...prevTimers.slice(0, -1),
+            {
+              ...prevTimers[prevTimers.length - 1],
+              status: STATUS.completed,
+            },
+          ]);
           setOutro(true);
           history.push(`/`);
           // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
         }
-        setTimerType(timers[currentIndex].timerType);
-        setTime(0);
         setIsRunning(true);
         setBtnState(false);
-      } else {
+      }
+
+      //for "single timer"
+      else {
         if (timerType === TIMERS.stopwatch) {
           setTime(savedTime);
           setMessage(MESSAGES.finished);

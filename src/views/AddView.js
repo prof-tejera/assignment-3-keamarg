@@ -95,7 +95,16 @@ const Add = () => {
     if (timers.length < limit) {
       setTimers(() => [
         ...timers,
-        { id, timerType, time, rounds, rest, status: STATUS.notRunning },
+        {
+          id,
+          timerType,
+          time,
+          rounds,
+          rest,
+          totalTime: rounds ? time * rounds : time,
+          totalRest: rest ? rest * rounds : rest,
+          status: STATUS.notRunning,
+        },
       ]);
     }
     console.log(timers);
@@ -110,7 +119,6 @@ const Add = () => {
     setIntro(true);
     history.push(`/`);
   };
-
   return (
     <Container>
       <Queue>

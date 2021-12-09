@@ -13,12 +13,14 @@ export const useTimer = () => {
   const { currentRound, setCurrentRound } = useContext(TimerContext);
   const { savedTime, setSavedTime } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
-  const { rest } = useContext(TimerContext);
+  const { rest, setRest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
   const { timerType, setTimerType } = useContext(TimerContext);
   const { timerRounds, setTimerRounds } = useContext(TimerContext);
   const { intro } = useContext(TimerContext);
   const { setOutro } = useContext(TimerContext);
+  const { setRounds } = useContext(TimerContext);
+
   const history = useHistory();
 
   // Hook for controlling all timers
@@ -36,7 +38,7 @@ export const useTimer = () => {
           // stopwatch queue
           if (timerRounds > 1) {
             setShowMessage(false);
-            nextInQueueStop();
+            nextInQueue();
           } else if (timers[0] && !intro) {
             setTimers((prevTimers) => [
               ...prevTimers.slice(0, -1),
@@ -47,7 +49,7 @@ export const useTimer = () => {
             ]);
             setOutro(true);
             history.push(`/`);
-            setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
           }
         }
       }
@@ -65,7 +67,7 @@ export const useTimer = () => {
           // countdown queue
           if (timerRounds > 1) {
             setShowMessage(false);
-            nextInQueueCount();
+            nextInQueue();
           } else if (timers[0] && !intro) {
             setTimers((prevTimers) => [
               ...prevTimers.slice(0, -1),
@@ -76,7 +78,7 @@ export const useTimer = () => {
             ]);
             setOutro(true);
             history.push(`/`);
-            setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
           }
         }
       }
@@ -96,8 +98,43 @@ export const useTimer = () => {
           setIsRunning(false);
           setShowMessage(true);
           setMessage(MESSAGES.finished);
+
+          if (timerRounds > 1) {
+            setShowMessage(false);
+            nextInQueue();
+          } else if (timers[0] && !intro) {
+            setTimers((prevTimers) => [
+              ...prevTimers.slice(0, -1),
+              {
+                ...prevTimers[prevTimers.length - 1],
+                status: STATUS.completed,
+              },
+            ]);
+            setOutro(true);
+            history.push(`/`);
+            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+          }
         }
       }
+
+      // //working xy
+      // if (timerType === TIMERS.xy) {
+      //   if (Number(time) > 1) {
+      //     setTime(Number(time) - 1);
+      //   } else if (currentRound > 1) {
+      //     setCurrentRound((rounds) => rounds - 1);
+      //     setTime(savedTime);
+      //     setShowMessage(true);
+      //     setMessage(getMessage(currentRound));
+      //   } else if (Number(time) === 1 && currentRound === 1) {
+      //     setCurrentRound(0);
+      //     setTime(0);
+      //     setBtnState(true);
+      //     setIsRunning(false);
+      //     setShowMessage(true);
+      //     setMessage(MESSAGES.finished);
+      //   }
+      // }
 
       //tabata
       if (timerType === TIMERS.tabata) {
@@ -128,10 +165,60 @@ export const useTimer = () => {
             setBtnState(true);
             setIsRunning(false);
             setShowMessage(true);
+            setCurrentRest(false);
             setMessage(MESSAGES.finished);
+            if (timerRounds > 1) {
+              setShowMessage(false);
+              nextInQueue();
+            } else if (timers[0] && !intro) {
+              setTimers((prevTimers) => [
+                ...prevTimers.slice(0, -1),
+                {
+                  ...prevTimers[prevTimers.length - 1],
+                  status: STATUS.completed,
+                },
+              ]);
+              setOutro(true);
+              history.push(`/`);
+              // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+            }
           }
         }
       }
+
+      //working tabata
+      // if (timerType === TIMERS.tabata) {
+      //   if (!currentRest) {
+      //     if (Number(time) > 1) {
+      //       setTime(Number(time) - 1);
+      //       setShowMessage(true);
+      //       setMessage(MESSAGES.work);
+      //     } else if (currentRound > 0) {
+      //       setTime(rest);
+      //       setCurrentRest(true);
+      //       setShowMessage(true);
+      //       setMessage(MESSAGES.rest);
+      //     }
+      //   }
+      //   if (currentRest) {
+      //     if (Number(time) > 1) {
+      //       setTime(Number(time) - 1);
+      //     } else if (currentRound > 1) {
+      //       setCurrentRound((rounds) => rounds - 1);
+      //       setTime(savedTime);
+      //       setCurrentRest(false);
+      //       setShowMessage(true);
+      //       setMessage(MESSAGES.work2);
+      //     } else if (Number(time) === 1 && currentRound === 1) {
+      //       setCurrentRound(0);
+      //       setTime(0);
+      //       setBtnState(true);
+      //       setIsRunning(false);
+      //       setShowMessage(true);
+      //       setMessage(MESSAGES.finished);
+      //     }
+      //   }
+      // }
     },
     isRunning ? delay : null
   );
@@ -156,8 +243,9 @@ export const useTimer = () => {
     }, [delay]);
   }
 
-  //working countdown queue
-  const nextInQueueCount = () => {
+  //queue handler
+  const nextInQueue = () => {
+    console.log("next");
     setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
     let currentIndex = timers.length - timerRounds;
 
@@ -175,115 +263,16 @@ export const useTimer = () => {
     );
     setTimerType(timers[currentIndex + 1].timerType);
     setSavedTime(timers[currentIndex + 1].time);
-    setIsRunning(true);
-    setBtnState(false);
-    if (timers[currentIndex + 1].timerType === TIMERS.stopwatch) {
-      setTime(0);
-    } else {
-      setTime(timers[currentIndex + 1].time);
-    }
-  };
-  //working stopwatch queue
-  const nextInQueueStop = () => {
-    setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
-    let currentIndex = timers.length - timerRounds;
+    setRounds(timers[currentIndex + 1].rounds);
+    setCurrentRound(timers[currentIndex + 1].rounds);
+    setRest(timers[currentIndex + 1].rest);
 
-    setTimers((prevTimers) =>
-      prevTimers.map((item, index) => {
-        let obj = Object.assign({}, item);
-        if (index === currentIndex) {
-          obj.status = STATUS.completed;
-        }
-        if (index === currentIndex + 1) {
-          obj.status = STATUS.running;
-        }
-        return obj;
-      })
-    );
-    setTimerType(timers[currentIndex + 1].timerType);
-    setSavedTime(timers[currentIndex + 1].time);
-    setIsRunning(true);
-    setBtnState(false);
     if (timers[currentIndex + 1].timerType === TIMERS.stopwatch) {
       setTime(0);
     } else {
       setTime(timers[currentIndex + 1].time);
     }
+    setIsRunning(true);
+    setBtnState(false);
   };
 };
-
-//working stopwatch queue
-//   const nextInQueue = () => {
-//     setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
-//     let currentIndex = timers.length - timerRounds;
-
-//     setTimers((prevTimers) =>
-//       prevTimers.map((item, index) => {
-//         let obj = Object.assign({}, item);
-//         if (index === currentIndex) {
-//           obj.status = STATUS.completed;
-//         }
-//         if (index === currentIndex + 1) {
-//           obj.status = STATUS.running;
-//         }
-//         return obj;
-//       })
-//     );
-//     setTimerType(timers[currentIndex].timerType);
-//     setSavedTime(timers[currentIndex + 1].time);
-//     setTime(0);
-//     setIsRunning(true);
-//     setBtnState(false);
-//   };
-// };
-
-//working countdown queue
-//   const nextInQueue = () => {
-//     setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
-//     let currentIndex = timers.length - timerRounds;
-
-//     setTimers((prevTimers) =>
-//       prevTimers.map((item, index) => {
-//         let obj = Object.assign({}, item);
-//         if (index === currentIndex) {
-//           obj.status = STATUS.completed;
-//         }
-//         if (index === currentIndex + 1) {
-//           obj.status = STATUS.running;
-//         }
-//         return obj;
-//       })
-//     );
-//     // setTimerType(timers[currentIndex].timerType);
-//     // setTime(0);
-//     setSavedTime(timers[currentIndex + 1].time);
-//     setTime(timers[currentIndex + 1].time);
-//     setIsRunning(true);
-//     setBtnState(false);
-//   };
-// };
-
-//working stopwatch queue
-//   const nextInQueue = () => {
-//     setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
-//     let currentIndex = timers.length - timerRounds;
-
-//     setTimers((prevTimers) =>
-//       prevTimers.map((item, index) => {
-//         let obj = Object.assign({}, item);
-//         if (index === currentIndex) {
-//           obj.status = STATUS.completed;
-//         }
-//         if (index === currentIndex + 1) {
-//           obj.status = STATUS.running;
-//         }
-//         return obj;
-//       })
-//     );
-//     setTimerType(timers[currentIndex].timerType);
-//     setSavedTime(timers[currentIndex + 1].time);
-//     setTime(0);
-//     setIsRunning(true);
-//     setBtnState(false);
-//   };
-// };

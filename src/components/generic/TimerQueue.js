@@ -31,19 +31,28 @@ const TimerQueue = () => {
   const history = useHistory();
 
   const removeItem = (id) => {
+    console.log(timers);
     const newList = timers.filter((item) => item.id !== id);
+    // let newId = 0;
+    // newList.map((item) => {
+    //   var temp = Object.assign({}, item);
+    //   temp.id = newId;
+    //   return temp;
+    // });
     setTimers(newList);
+    // console.log(newList);
   };
 
+  //set the total time in que
   useEffect(() => {
     if (timers.length > 0) {
       const time = timers.reduce((prevVal, currVal) => ({
-        time: prevVal.time + currVal.time,
+        totalTime: prevVal.totalTime + currVal.totalTime,
       }));
       const rest = timers.reduce((prevVal, currVal) => ({
-        rest: prevVal.rest + currVal.rest,
+        totalRest: prevVal.totalRest + currVal.totalRest,
       }));
-      setTotalTime(time.time + rest.rest);
+      setTotalTime(time.totalTime + rest.totalRest);
     } else {
       setTotalTime(0);
     }
@@ -52,7 +61,7 @@ const TimerQueue = () => {
     // }
   }, [timers]);
 
-  useEffect(() => {}, [timers]);
+  // useEffect(() => {}, [timers]);
 
   const clickHandler = () => {
     setTimers(JSON.parse(localStorage.getItem("timerQueue")));
@@ -72,7 +81,7 @@ const TimerQueue = () => {
             onClick={isRunning ? null : () => removeItem(item.id)}
             className={`${item.timerType} ${item.status}`}
           >
-            {key + 1} {item.timerType}, Status: {item.status} Time: {item.time}
+            {key + 1} {item.timerType}, Status: {item.status}
           </Item>
         ))
       ) : (
