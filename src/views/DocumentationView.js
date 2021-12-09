@@ -10,6 +10,8 @@ import Panel from "../components/generic/Panel";
 // import Timer from "../components/generic/Timer";
 import Settings from "../components/generic/Settings";
 import Navbar from "../components/generic/Navbar";
+import IntroOutro from "../components/generic/IntroOutro";
+import TimerQueue from "../components/generic/TimerQueue";
 
 const Container = styled.div`
   display: flex;
@@ -56,11 +58,29 @@ const Documentation = () => {
             },
             {
               prop: "onClick",
-              description: "Holds the clickHandler function",
+              description: "Has the clickHandler function",
               type: "function",
               defaultValue: "null",
             },
+            {
+              prop: "inner",
+              description: "Has the text for the btn name",
+              type: "String",
+              defaultValue: "",
+            },
+            {
+              prop: "disabled",
+              description: "Is the button disabled?",
+              type: "Bool",
+              defaultValue: "false",
+            },
           ]}
+        />
+
+        <DocumentComponent
+          title="IntroOutro"
+          component={<IntroOutro />}
+          propDocs={[{}]}
         />
         <DocumentComponent
           title="DisplayTime"
@@ -83,14 +103,7 @@ const Documentation = () => {
         <DocumentComponent
           title="Settings"
           component={<Settings />}
-          propDocs={[
-            {
-              prop: "timerType",
-              description: "Has the type of timer",
-              type: "String",
-              defaultValue: "Countdown",
-            },
-          ]}
+          propDocs={[]}
         />
         <DocumentComponent
           title="Timer"
@@ -108,14 +121,12 @@ const Documentation = () => {
         <DocumentComponent
           title="Navbar"
           component={<Navbar />}
-          propDocs={[
-            {
-              prop: "timerType",
-              description: "Has the type of timer",
-              type: "String",
-              defaultValue: "Countdown",
-            },
-          ]}
+          propDocs={[]}
+        />
+        <DocumentComponent
+          title="TimerQueue"
+          component={<TimerQueue />}
+          propDocs={[]}
         />
       </div>
     </Container>

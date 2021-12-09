@@ -33,8 +33,6 @@ const DisplayTime = () => {
       <span id="hours">{timerValue(time, true).slice(0, 1)}h</span>
       <span id="minutes">{timerValue(time, true).slice(1, 2)}m</span>
       <span id="seconds">{timerValue(time, true).slice(2, 3)}s</span>
-      {/* <span id="deciSeconds"> {timerValue(time, true).slice(3)}</span> */}
-      {/* {timerValue(time)} */}
     </Display>
   );
 };

@@ -69,20 +69,6 @@ const IntroOutro = () => {
 
   const history = useHistory();
 
-  // const setFirstQueue = () => {
-  //   setTimers((prevTimers) => [
-  //     (prevTimers[0] = {
-  //       id: 0,
-  //       timerType: timers[0].timerType,
-  //       time: timers[0].time,
-  //       rounds: timers[0].rounds,
-  //       rest: timers[0].rest,
-  //       status: STATUS.running,
-  //     }),
-  //     ...prevTimers.slice(1),
-  //   ]);
-  // };
-
   const setFirstQueue = () => {
     setTimers((prevTimers) => [
       { ...prevTimers[0], status: STATUS.running },
@@ -103,7 +89,6 @@ const IntroOutro = () => {
   };
 
   const handleStartClick = () => {
-    //I think this should be put in helpers and used in the useInterval hook as well
     refreshTimers();
     localStorage.setItem("timerQueue", JSON.stringify(timers));
     if (Array.isArray(timers) && timers.length > 0) {
@@ -143,7 +128,6 @@ const IntroOutro = () => {
           setRounds(timers[0].rounds);
           setRest(timers[0].rest);
           break;
-
         default:
           break;
       }

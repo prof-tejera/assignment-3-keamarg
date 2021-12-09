@@ -56,6 +56,8 @@ const App = () => {
   const { setDocs } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
   const { setIsRunning } = useContext(TimerContext);
+  const { setShowSettingsMessage } = useContext(TimerContext);
+  const { setShowTimerRounds } = useContext(TimerContext);
 
   const handleClick = (e) => {
     if (e.target.innerHTML === "Documentation") {
@@ -71,6 +73,9 @@ const App = () => {
     if (e.target.innerHTML === "Add") {
       setIsRunning(false);
     }
+
+    setShowSettingsMessage(false);
+    setShowTimerRounds(true);
   };
 
   return (

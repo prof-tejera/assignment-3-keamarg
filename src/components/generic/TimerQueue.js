@@ -27,12 +27,13 @@ const TimerQueue = () => {
   const { timers, setTimers } = useContext(TimerContext);
   const { setOutro } = useContext(TimerContext);
   const { isRunning } = useContext(TimerContext);
+  const { setShowTimerRounds } = useContext(TimerContext);
+  const { setShowSettingsMessage } = useContext(TimerContext);
 
   const [totalTime, setTotalTime] = useState(0);
   const history = useHistory();
 
   const removeItem = (id) => {
-    console.log(timers);
     const newList = timers.filter((item) => item.id !== id);
     setTimers(newList);
   };
@@ -55,6 +56,8 @@ const TimerQueue = () => {
   const clickHandler = () => {
     setTimers(JSON.parse(localStorage.getItem("timerQueue")));
     setOutro(true);
+    setShowSettingsMessage(false);
+    setShowTimerRounds(true);
     history.push(`/`);
   };
   return (

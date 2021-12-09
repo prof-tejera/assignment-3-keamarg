@@ -28,6 +28,7 @@ import { useHistory } from "react-router";
 
 const Title = styled.h1`
   color: ${COLORS.text};
+  }
 `;
 const UpperPanel = styled.div`
   position: relative;
@@ -87,6 +88,10 @@ const SettingsPanel = styled.div`
   .backBtn {
     ${BackBtn}
   }
+
+  .settingsTitle {
+    position: absolute;
+    top: 1rem;
 `;
 const Message = styled.p`
   color: ${COLORS.text};}
@@ -202,7 +207,6 @@ const Timer = (props) => {
       if (inQueue && timerRounds > 0) {
         setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
         let currentIndex = timers.length - timerRounds;
-        // console.log("curentIndex from forward: " + currentIndex);
         setTimers((prevTimers) =>
           prevTimers.map((item, index) => {
             var temp = Object.assign({}, item);
@@ -212,7 +216,6 @@ const Timer = (props) => {
             if (index === currentIndex + 1) {
               temp.status = STATUS.running;
             }
-            console.log(temp);
             return temp;
           })
         );
@@ -235,7 +238,6 @@ const Timer = (props) => {
           ]);
           setOutro(true);
           history.push(`/`);
-          // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
         }
         setCurrentRest(false);
         setIsRunning(true);
@@ -388,8 +390,10 @@ const Timer = (props) => {
     );
   }
   return (
+    //settings
     <Panel timerType={timerType}>
       <SettingsPanel className="settingspanel text-center d-flex align-items-center justify-content-center">
+        <Title className="settingsTitle">Settings</Title>
         <Button
           styleName="backBtn"
           onClick={handleClickSettingsReady}

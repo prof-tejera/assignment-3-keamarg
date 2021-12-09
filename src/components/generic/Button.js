@@ -6,8 +6,6 @@ import { COLORS, BUTTONS, BTNTYPE } from "../../utils/helpers";
 const Btn = styled.button`
   border-radius: 0.3rem;
   border: none;
-  // font-size: 1.5rem;
-  // font-weight: bold;
   color: ${COLORS.text};
   transition: 0.2s ease;
   :hover {
@@ -27,6 +25,8 @@ const Button = (props) => {
     styleName: "none",
     value: "none",
     onClick: null,
+    inner: "",
+    disabled: false,
   };
   const { value, styleName, onClick, inner, disabled } = props;
   return (
@@ -45,6 +45,8 @@ Button.propTypes = {
   styleName: PropTypes.string,
   value: PropTypes.string,
   onClick: PropTypes.func,
+  inner: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default Button;

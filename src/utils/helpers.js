@@ -2,8 +2,6 @@
 // calculates number of minutes when passed in seconds. Things of this nature that you don't want to copy/paste
 // everywhere.
 
-// import DisplayTime from "../components/generic/DisplayTime";
-
 //Colors used
 export const COLORS = {
   countdown: "#316E94",
@@ -76,7 +74,6 @@ export const STATUS = {
 };
 
 // Function for converting the seconds to a more human friendly format
-
 export const timerValue = (value, timer) => {
   const fullTime = new Date(value * 1000).toISOString();
   const hours = fullTime.substr(12, 1);

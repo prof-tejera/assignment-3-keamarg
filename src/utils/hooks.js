@@ -49,7 +49,6 @@ export const useTimer = () => {
             ]);
             setOutro(true);
             history.push(`/`);
-            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
           }
         }
       }
@@ -69,16 +68,7 @@ export const useTimer = () => {
             setShowMessage(false);
             nextInQueue();
           } else if (timers[0] && !intro) {
-            setTimers((prevTimers) => [
-              ...prevTimers.slice(0, -1),
-              {
-                ...prevTimers[prevTimers.length - 1],
-                status: STATUS.completed,
-              },
-            ]);
-            setOutro(true);
-            history.push(`/`);
-            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+            lastInQueue();
           }
         }
       }
@@ -103,38 +93,10 @@ export const useTimer = () => {
             setShowMessage(false);
             nextInQueue();
           } else if (timers[0] && !intro) {
-            setTimers((prevTimers) => [
-              ...prevTimers.slice(0, -1),
-              {
-                ...prevTimers[prevTimers.length - 1],
-                status: STATUS.completed,
-              },
-            ]);
-            setOutro(true);
-            history.push(`/`);
-            // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+            lastInQueue();
           }
         }
       }
-
-      // //working xy
-      // if (timerType === TIMERS.xy) {
-      //   if (Number(time) > 1) {
-      //     setTime(Number(time) - 1);
-      //   } else if (currentRound > 1) {
-      //     setCurrentRound((rounds) => rounds - 1);
-      //     setTime(savedTime);
-      //     setShowMessage(true);
-      //     setMessage(getMessage(currentRound));
-      //   } else if (Number(time) === 1 && currentRound === 1) {
-      //     setCurrentRound(0);
-      //     setTime(0);
-      //     setBtnState(true);
-      //     setIsRunning(false);
-      //     setShowMessage(true);
-      //     setMessage(MESSAGES.finished);
-      //   }
-      // }
 
       //tabata
       if (timerType === TIMERS.tabata) {
@@ -171,54 +133,11 @@ export const useTimer = () => {
               setShowMessage(false);
               nextInQueue();
             } else if (timers[0] && !intro) {
-              setTimers((prevTimers) => [
-                ...prevTimers.slice(0, -1),
-                {
-                  ...prevTimers[prevTimers.length - 1],
-                  status: STATUS.completed,
-                },
-              ]);
-              setOutro(true);
-              history.push(`/`);
-              // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
+              lastInQueue();
             }
           }
         }
       }
-
-      //working tabata
-      // if (timerType === TIMERS.tabata) {
-      //   if (!currentRest) {
-      //     if (Number(time) > 1) {
-      //       setTime(Number(time) - 1);
-      //       setShowMessage(true);
-      //       setMessage(MESSAGES.work);
-      //     } else if (currentRound > 0) {
-      //       setTime(rest);
-      //       setCurrentRest(true);
-      //       setShowMessage(true);
-      //       setMessage(MESSAGES.rest);
-      //     }
-      //   }
-      //   if (currentRest) {
-      //     if (Number(time) > 1) {
-      //       setTime(Number(time) - 1);
-      //     } else if (currentRound > 1) {
-      //       setCurrentRound((rounds) => rounds - 1);
-      //       setTime(savedTime);
-      //       setCurrentRest(false);
-      //       setShowMessage(true);
-      //       setMessage(MESSAGES.work2);
-      //     } else if (Number(time) === 1 && currentRound === 1) {
-      //       setCurrentRound(0);
-      //       setTime(0);
-      //       setBtnState(true);
-      //       setIsRunning(false);
-      //       setShowMessage(true);
-      //       setMessage(MESSAGES.finished);
-      //     }
-      //   }
-      // }
     },
     isRunning ? delay : null
   );
@@ -243,9 +162,8 @@ export const useTimer = () => {
     }, [delay]);
   }
 
-  //queue handler
+  //queue handlers
   const nextInQueue = () => {
-    console.log("next");
     setTimerRounds((prevTimerRounds) => prevTimerRounds - 1);
     let currentIndex = timers.length - timerRounds;
 
@@ -274,5 +192,17 @@ export const useTimer = () => {
     }
     setIsRunning(true);
     setBtnState(false);
+  };
+
+  const lastInQueue = () => {
+    setTimers((prevTimers) => [
+      ...prevTimers.slice(0, -1),
+      {
+        ...prevTimers[prevTimers.length - 1],
+        status: STATUS.completed,
+      },
+    ]);
+    setOutro(true);
+    history.push(`/`);
   };
 };
