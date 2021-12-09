@@ -155,7 +155,6 @@ const Timer = (props) => {
           setBtnState(false);
         }
         if (timerType !== TIMERS.stopwatch && t) {
-          console.log("pingNot");
           setIsRunning(true);
           setBtnState(false);
         }
@@ -229,6 +228,7 @@ const Timer = (props) => {
           history.push(`/`);
           // setTimers(JSON.parse(localStorage.getItem("timerQueue")));
         }
+        setCurrentRest(false);
         setIsRunning(true);
         setBtnState(false);
       }

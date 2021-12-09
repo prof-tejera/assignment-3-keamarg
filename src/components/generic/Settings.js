@@ -43,10 +43,10 @@ const Settings = () => {
   const handleTimerChange = (e) => {
     if (!docs) {
       if (e.target.name === "hours") {
-        setHours(e.target.value * 3600);
+        setHours(Number(e.target.value * 3600));
       }
       if (e.target.name === "minutes") {
-        setMinutes(e.target.value * 60);
+        setMinutes(Number(e.target.value * 60));
       }
       if (e.target.name === "seconds") {
         setSeconds(Number(e.target.value));
@@ -61,7 +61,7 @@ const Settings = () => {
   //Round handler
   const handleRoundChange = (e) => {
     if (!docs) {
-      setRounds(e.target.value);
+      setRounds(Number(e.target.value));
     }
   };
 
@@ -69,10 +69,10 @@ const Settings = () => {
   const handleRestChange = (e) => {
     if (!docs) {
       if (e.target.name === "hours") {
-        setRestHours(e.target.value * 3600);
+        setRestHours(Number(e.target.value * 3600));
       }
       if (e.target.name === "minutes") {
-        setRestMinutes(e.target.value * 60);
+        setRestMinutes(Number(e.target.value * 60));
       }
       if (e.target.name === "seconds") {
         setRestSeconds(Number(e.target.value));

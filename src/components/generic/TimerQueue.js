@@ -17,9 +17,10 @@ const Queue = styled.div`
 const Item = styled.div`
   color: ${COLORS.text};
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0.5rem;
+  padding: 0.45rem;
   border-radius: 5px;
   margin-top: 0.15rem;
+  font-size: 0.9rem;
 `;
 
 const TimerQueue = () => {
@@ -81,7 +82,8 @@ const TimerQueue = () => {
             onClick={isRunning ? null : () => removeItem(item.id)}
             className={`${item.timerType} ${item.status}`}
           >
-            {key + 1} {item.timerType}, Status: {item.status}
+            {key + 1} {item.timerType} ({timerValue(item.totalTime)}){" "}
+            {item.status}
           </Item>
         ))
       ) : (

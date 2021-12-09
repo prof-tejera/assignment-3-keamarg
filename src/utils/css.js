@@ -184,11 +184,12 @@ export const QueueStyle = css`
     color: rgba(255, 0, 0, 0.8);
   }
   .running {
-    color: green;
+    border: 2px solid ${COLORS.start};
   }
   .notRunning {
+    border: 2px solid ${COLORS.text};
   }
   .completed {
-    color: gold;
+    border: 2px solid skyblue;
   }
 `;

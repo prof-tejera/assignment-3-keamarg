@@ -55,17 +55,21 @@ const Navigation = styled.nav`
 const App = () => {
   const { setDocs } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
+  const { setIsRunning } = useContext(TimerContext);
 
   const handleClick = (e) => {
     if (e.target.innerHTML === "Documentation") {
       setDocs(true);
+      setIsRunning(false);
     } else {
       setDocs(false);
     }
     if (e.target.innerHTML === "Timers") {
       setIntro(true);
+      setIsRunning(false);
     }
     if (e.target.innerHTML === "Add") {
+      setIsRunning(false);
     }
   };
 
