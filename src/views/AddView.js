@@ -59,8 +59,8 @@ const Selector = styled.select`
 const Add = () => {
   const { timerType, setTimerType } = useContext(TimerContext);
   const { time } = useContext(TimerContext);
-  const { rounds } = useContext(TimerContext);
-  const { rest } = useContext(TimerContext);
+  const { rounds, setRounds } = useContext(TimerContext);
+  const { rest, setRest } = useContext(TimerContext);
   const { timers, setTimers } = useContext(TimerContext);
   const { setInQueue } = useContext(TimerContext);
   const { setIntro } = useContext(TimerContext);
@@ -73,14 +73,19 @@ const Add = () => {
     switch (e.target.value) {
       case TIMERS.stopwatch:
         setTimerType(TIMERS.stopwatch);
+        setRest(0);
+        setRounds(0);
         localStorage.setItem("timerType", "Stopwatch");
         break;
       case TIMERS.countdown:
         setTimerType(TIMERS.countdown);
+        setRest(0);
+        setRounds(0);
         localStorage.setItem("timerType", "Countdown");
         break;
       case TIMERS.xy:
         setTimerType(TIMERS.xy);
+        setRest(0);
         localStorage.setItem("timerType", "XY");
         break;
       case TIMERS.tabata:

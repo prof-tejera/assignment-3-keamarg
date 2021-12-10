@@ -72,8 +72,8 @@ const TimerQueue = () => {
             onClick={isRunning ? null : () => removeItem(item.id)}
             className={`${item.timerType} ${item.status}`}
           >
-            {key + 1} {item.timerType} ({timerValue(item.totalTime)}){" "}
-            {item.status}
+            {key + 1} {item.timerType} (
+            {timerValue(item.totalTime + item.totalRest)}) {item.status}
           </Item>
         ))
       ) : (
