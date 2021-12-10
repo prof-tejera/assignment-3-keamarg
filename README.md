@@ -88,6 +88,7 @@ For other ways to deploy see https://github.com/prof-tejera/react-deployment-cod
 ### Known bugs:
 
 - The queue looses sync with each new timer. After approx 25 timers one second it seems. The loss is between timer rounds, and not on the individual timers. I have not been able to find a solution for this.
+- For some reason, when starting the app on localhost the timerType is set correctly from the provider, but when loading it from GH pages, there is no initial timerType set (not a huge problem, but I haven't been able to figure out why)
 
 - References:
   - I used Bootstrap for the layout and for timer icons.
