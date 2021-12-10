@@ -95,5 +95,6 @@ For other ways to deploy see https://github.com/prof-tejera/react-deployment-cod
   - I used Styled components for all other CSS
   - I used https://color.adobe.com/create/color-wheel to create a colorscheme, initially with the "split complimentary option", and then fine tuning until I was satisfied with the colors. I wanted a simple, minimalistic, but colorful app design, and took inspiration from different existing apps, as https://play.google.com/store/apps/details?id=cc.dreamspark.intervaltimer&hl=en.
   - I used the supplied article as inspiration for the timer loop: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+  - For the progress indication, I used both text and colors. I would have prefered to use only color for "screen real estate reasons", but due to color blindness concerns, I opted for both. I was inspired by this post + answers: https://ux.stackexchange.com/questions/88528/colours-for-project-status
 
 Link to live version on GH pages: https://prof-tejera.github.io/assignment-3-keamarg/
