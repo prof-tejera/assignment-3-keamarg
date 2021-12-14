@@ -79,7 +79,7 @@ For other ways to deploy see https://github.com/prof-tejera/react-deployment-cod
 - I have a css file for common styles used by multiple components.
 - I have one, common context for the project.
 
-### Concious "omissions":
+### Conscious "omissions" that could be implemented to improve UX:
 
 - I had a version, where I had limited the user input, but had issues making it work on different platforms/devices. In the end, I decided to spend my time on other parts of the code, and allow the user to input very large numbers. I recommend using the spinners, which limit input to a reasonable range (I had disabled keyboard input, but the spinners did not work on mobile out of the box, so I enabled it again).
 - The hour "H" is single digited and not limited, which also means that if the "H" number is double-digited (or more), it will only display the last number. This should probably be limited although a 10 hour workout seems a bit excessive.
@@ -87,8 +87,8 @@ For other ways to deploy see https://github.com/prof-tejera/react-deployment-cod
 
 ### Known bugs:
 
-- The queue looses sync with each new timer. After approx 25 timers one second it seems. The loss is between timer rounds, and not on the individual timers. I have not been able to find a solution for this.
-- For some reason, when starting the app on localhost the timerType is set correctly from the provider, but when loading it from GH pages, there is no initial timerType set (not a huge problem, but I haven't been able to figure out why)
+- The queue looses sync with each new timer. This is not a big problem when the queue is limited, but if I remove the ceiling, after approx 25 timers it loses one second it seems. The loss is between timer rounds, and not on the individual timers. I have not been able to find a solution for this.
+- For some reason, when starting the app on localhost the timerType is set correctly from the provider, but when loading it from GH pages, there is no initial timerType set (not a huge problem, but I haven't been able to figure out why, and so far I am attributing it to being another GH pages bug, though I may be wrong)
 
 - References:
   - I used Bootstrap for the layout and for timer icons.
