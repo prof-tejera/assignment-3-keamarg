@@ -86,9 +86,11 @@ const Add = () => {
       case TIMERS.xy:
         setTimerType(TIMERS.xy);
         setRest(0);
+        setRounds(1);
         localStorage.setItem("timerType", "XY");
         break;
       case TIMERS.tabata:
+        setRounds(1);
         setTimerType(TIMERS.tabata);
         localStorage.setItem("timerType", "Tabata");
         break;

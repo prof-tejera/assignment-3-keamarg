@@ -106,7 +106,7 @@ const Timer = (props) => {
   const { settingsState, setSettingsState } = useContext(TimerContext);
   const { savedTime, setSavedTime } = useContext(TimerContext);
   const { docs } = useContext(TimerContext);
-  const { rounds } = useContext(TimerContext);
+  const { rounds, setRounds } = useContext(TimerContext);
   const { currentRound, setCurrentRound } = useContext(TimerContext);
   const { message, setMessage } = useContext(TimerContext);
   const { showMessage, setShowMessage } = useContext(TimerContext);
@@ -115,7 +115,7 @@ const Timer = (props) => {
   const { showTimerRounds, setShowTimerRounds } = useContext(TimerContext);
   const { currentRest, setCurrentRest } = useContext(TimerContext);
   const { timerType, setTimerType } = useContext(TimerContext);
-  const { rest } = useContext(TimerContext);
+  const { rest, setRest } = useContext(TimerContext);
   const { intro, setIntro } = useContext(TimerContext);
   const { inQueue } = useContext(TimerContext);
   const { setTimers } = useContext(TimerContext);
@@ -226,6 +226,9 @@ const Timer = (props) => {
             setTime(0);
           } else {
             setTime(timers[currentIndex + 1].time);
+            setRounds(timers[currentIndex + 1].rounds);
+            setCurrentRound(timers[currentIndex + 1].rounds);
+            setRest(timers[currentIndex + 1].rest);
           }
         }
         if (timerRounds === 1) {

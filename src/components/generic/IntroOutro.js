@@ -133,7 +133,6 @@ const IntroOutro = () => {
       }
     }
   };
-  console.log(timerType);
 
   const handleAddClick = () => {
     history.push(`/add`);

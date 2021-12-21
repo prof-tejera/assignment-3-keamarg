@@ -81,8 +81,8 @@ For other ways to deploy see https://github.com/prof-tejera/react-deployment-cod
 
 ### Conscious "omissions" that could be implemented to improve UX:
 
-- I had a version, where I had limited the user input, but had issues making it work on different platforms/devices. In the end, I decided to spend my time on other parts of the code, and allow the user to input very large numbers. I recommend using the spinners, which limit input to a reasonable range (I had disabled keyboard input, but the spinners did not work on mobile out of the box, so I enabled it again).
-- The hour "H" is single digited and not limited, which also means that if the "H" number is double-digited (or more), it will only display the last number. This should probably be limited although a 10 hour workout seems a bit excessive.
+- I had a version, where I had limited the user input, but had issues making it work on different platforms/devices. In the end, I decided to spend my time on other parts of the code, and allow the user to input very large numbers. I recommend using the spinners, which limit input to a reasonable range (I had disabled keyboard input, but the spinners did not work on mobile out of the box, so I enabled it again). 21/12 NOTE: This has been fixed in the latest, so that too low/high numbers will now default to lowest/highest allowed.
+- The hour "H" is single digited and not limited, which also means that if the "H" number is double-digited (or more), it will only display the last number. This should probably be limited although a 10 hour workout seems a bit excessive. 21/12 NOTE: This is now only an issue for the TABATA timer, where rest can influence the final count above one digit.
 - The CSS could be more responsive, but again, this was not my focus and can of course be improved.
 
 ### Known bugs:

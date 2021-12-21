@@ -43,12 +43,33 @@ const Settings = () => {
   const handleTimerChange = (e) => {
     if (!docs) {
       if (e.target.name === "hours") {
+        if (!e.target.checkValidity()) {
+          if (e.target.value < 0) {
+            e.target.value = 0;
+          } else {
+            e.target.value = 9;
+          }
+        }
         setHours(Number(e.target.value * 3600));
       }
       if (e.target.name === "minutes") {
+        if (!e.target.checkValidity()) {
+          if (e.target.value < 0) {
+            e.target.value = 0;
+          } else {
+            e.target.value = 59;
+          }
+        }
         setMinutes(Number(e.target.value * 60));
       }
       if (e.target.name === "seconds") {
+        if (!e.target.checkValidity()) {
+          if (e.target.value < 0) {
+            e.target.value = 0;
+          } else {
+            e.target.value = 59;
+          }
+        }
         setSeconds(Number(e.target.value));
       }
     }
@@ -61,6 +82,13 @@ const Settings = () => {
   //Round handler
   const handleRoundChange = (e) => {
     if (!docs) {
+      if (!e.target.checkValidity()) {
+        if (e.target.value < 1) {
+          e.target.value = 1;
+        } else {
+          e.target.value = 9;
+        }
+      }
       setRounds(Number(e.target.value));
     }
   };
@@ -69,12 +97,33 @@ const Settings = () => {
   const handleRestChange = (e) => {
     if (!docs) {
       if (e.target.name === "hours") {
+        if (!e.target.checkValidity()) {
+          if (e.target.value < 0) {
+            e.target.value = 0;
+          } else {
+            e.target.value = 9;
+          }
+        }
         setRestHours(Number(e.target.value * 3600));
       }
       if (e.target.name === "minutes") {
+        if (!e.target.checkValidity()) {
+          if (e.target.value < 0) {
+            e.target.value = 0;
+          } else {
+            e.target.value = 59;
+          }
+        }
         setRestMinutes(Number(e.target.value * 60));
       }
       if (e.target.name === "seconds") {
+        if (!e.target.checkValidity()) {
+          if (e.target.value < 0) {
+            e.target.value = 0;
+          } else {
+            e.target.value = 59;
+          }
+        }
         setRestSeconds(Number(e.target.value));
       }
     }
